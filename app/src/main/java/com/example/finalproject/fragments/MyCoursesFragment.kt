@@ -27,7 +27,7 @@ class MyCoursesFragment() : Fragment() {
         val view =
             LayoutInflater.from(context).inflate(R.layout.my_courses_fragment, container, false)
         val myCoursesRV = view.findViewById<RecyclerView>(R.id.my_courses_rv)
-        val continueCourseButton:Button=view.findViewById(R.id.continue_course_button)
+        //val continueCourseButton:Button=view.findViewById(R.id.continue_course_button)
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(myCoursesRV)
         myCoursesRV.layoutManager =
