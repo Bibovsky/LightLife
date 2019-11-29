@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
+
 val fragment=MyCoursesFragment()
         supportFragmentManager.beginTransaction().add(R.id.fragment_container,fragment).commit()
+
     }
 }

@@ -101,7 +101,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun newActivity() {
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, BottomNavActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
 
