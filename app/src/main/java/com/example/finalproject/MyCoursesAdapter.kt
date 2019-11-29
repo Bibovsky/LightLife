@@ -3,6 +3,7 @@ package com.example.finalproject
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.models.MyCoursesModel
@@ -28,11 +29,11 @@ class MyCoursesAdapter(val myCoursesList: MutableList<MyCoursesModel>) :
     }
 
     inner class MyCoursesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val myCoursesPhoto: TextView = view.findViewById(R.id.my_courses_photo)
+        val myCoursesPhoto: ImageView = view.findViewById(R.id.my_courses_photo)
         val myCoursesName:TextView=view.findViewById(R.id.my_courses_name_text_view)
         val myCoursesDescription:TextView=view.findViewById(R.id.my_courses_description_text_view)
         fun bind(position: Int) {
-            myCoursesPhoto.text = myCoursesList[position].photo
+
             myCoursesName.text=myCoursesList[position].courseName
             myCoursesDescription.text=myCoursesList[position].courseDescription
         }
