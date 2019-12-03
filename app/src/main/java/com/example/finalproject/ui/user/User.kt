@@ -1,11 +1,13 @@
 package com.example.finalproject.ui.user
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.finalproject.BottomNavActivity
 import com.example.finalproject.R
@@ -15,6 +17,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 class User:Fragment() {
+    lateinit var loginpref: SharedPreferences
+    lateinit var passwordpref: SharedPreferences
+    lateinit var loginprefEditor:SharedPreferences.Editor
+    lateinit var passwordprefEditor:SharedPreferences.Editor
     private lateinit var mDatebase: FirebaseDatabase
     private lateinit var mReference: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
@@ -23,6 +29,12 @@ class User:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        loginpref = activity!!.getSharedPreferences("LOGINPREF", AppCompatActivity.MODE_PRIVATE)
+        passwordpref=activity!!.getSharedPreferences("PASSWORDPREF", AppCompatActivity.MODE_PRIVATE)
+        loginprefEditor=loginpref.edit().clear()
+        loginprefEditor.apply()
+        passwordprefEditor=passwordpref.edit().clear()
+        passwordprefEditor.apply()
         val view=LayoutInflater.from(container!!.context).inflate(R.layout.fragment_user,container,false)
         mDatebase = FirebaseDatabase.getInstance()
         mReference = mDatebase.reference.child("Users")
