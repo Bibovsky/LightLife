@@ -34,7 +34,7 @@ class SignInActivity : AppCompatActivity() {
         mDatebase = FirebaseDatabase.getInstance()
         mReference = mDatebase.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
-        if (loginpref.getString("email", null)!=null && passwordpref.getString("password",null)!=null){
+       /* if (loginpref.getString("email", null)!=null && passwordpref.getString("password",null)!=null){
             val login= loginpref.getString("email",null)
             val password=passwordpref.getString("password",null)
             mAuth.signInWithEmailAndPassword(login!!,password!!).addOnCompleteListener { task->
@@ -42,7 +42,7 @@ class SignInActivity : AppCompatActivity() {
                     newActivity()
                 }
             }
-        }
+        }*/
         initializeViews()
 
         setListeners()
