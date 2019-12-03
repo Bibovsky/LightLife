@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -75,7 +76,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             imageUri = data.data!!
-            uploadImageOnStorage()
+            Glide.with(this).load(imageUri).centerCrop().circleCrop().into(userImageButton)
+
         }
     }
 
@@ -104,6 +106,13 @@ class SignUpActivity : AppCompatActivity() {
                         signUpLoginEditor.apply()
                         signUpPasswordEditor.apply()
                         Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
+                        if (imageUri!=null){
+                            uploadImageOnStorage()
+                        }
+                        else{
+                            imageUri=Uri.parse("android.resource://com.example.finalproject/drawable/ic_launcher_stock")
+                        }
+
                         newActivity()
 
                     } else Toast.makeText(
