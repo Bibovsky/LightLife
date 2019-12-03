@@ -35,7 +35,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var login: EditText
     private lateinit var password: EditText
     private lateinit var confPass: EditText
-    private lateinit var imageUri: Uri
+    private var imageUri: Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +111,9 @@ class SignUpActivity : AppCompatActivity() {
                         }
                         else{
                             imageUri=Uri.parse("android.resource://com.example.finalproject/drawable/ic_launcher_stock")
+                            uploadImageOnStorage()
                         }
+
 
                         newActivity()
 
@@ -143,7 +145,7 @@ class SignUpActivity : AppCompatActivity() {
 
         val mRef = FirebaseStorage.getInstance().getReference("/images/$filename")
 
-        mRef.putFile(imageUri).addOnCompleteListener {
+        mRef.putFile(imageUri!!).addOnCompleteListener {
             mRef.downloadUrl.addOnSuccessListener {
                 Log.e("FirebaseStorage", "$it")
             }
