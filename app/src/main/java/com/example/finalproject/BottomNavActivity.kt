@@ -30,7 +30,6 @@ class BottomNavActivity : AppCompatActivity() {
                 R.id.navigation_search
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }
