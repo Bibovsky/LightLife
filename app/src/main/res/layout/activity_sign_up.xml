@@ -19,7 +19,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:src="@mipmap/ic_launcher_round"
+        android:id="@+id/user_image_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registration_text_view" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -28,6 +41,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registration_text_view">
+
 
         <EditText
             android:id="@+id/email_sign_up_et"
@@ -41,8 +55,8 @@
         <EditText
             android:id="@+id/login_et"
             android:layout_width="300dp"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:hint="Логин" />
 
         <EditText

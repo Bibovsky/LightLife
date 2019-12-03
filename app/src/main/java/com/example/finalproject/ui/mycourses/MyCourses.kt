@@ -1,10 +1,9 @@
-package com.example.finalproject.fragments
+package com.example.finalproject.ui.mycourses
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -14,7 +13,7 @@ import com.example.finalproject.MyCoursesAdapter
 import com.example.finalproject.R
 import com.example.finalproject.models.MyCoursesModel
 
-class MyCoursesFragment() : Fragment() {
+class MyCourses:Fragment() {
     private var myCoursesList = mutableListOf<MyCoursesModel>()
     override fun onCreateView(
         inflater: LayoutInflater,

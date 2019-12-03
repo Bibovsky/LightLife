@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class SignInActivity : AppCompatActivity() {
-    lateinit var loginpref: SharedPreferences
-    lateinit var passwordpref: SharedPreferences
+    lateinit var signInLoginPref: SharedPreferences
+    lateinit var signInPasswordPref: SharedPreferences
+    lateinit var signInLoginEditor: SharedPreferences.Editor
+    lateinit var signInPasswordEditor: SharedPreferences.Editor
     private lateinit var signInButton: Button
     private lateinit var mDatebase: FirebaseDatabase
     private lateinit var mReference: DatabaseReference
@@ -29,20 +28,21 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        loginpref = getSharedPreferences("LOGINPREF", MODE_PRIVATE)
-        passwordpref=getSharedPreferences("PASSWORDPREF",MODE_PRIVATE)
+        signInLoginPref = getSharedPreferences("signInLoginPref", Context.MODE_PRIVATE)
+        signInPasswordPref = getSharedPreferences("signInPasswordPref", Context.MODE_PRIVATE)
         mDatebase = FirebaseDatabase.getInstance()
         mReference = mDatebase.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
-        if (loginpref.getString("email", null)!=null && passwordpref.getString("password",null)!=null){
-            val login= loginpref.getString("email",null)
-            val password=passwordpref.getString("password",null)
-            mAuth.signInWithEmailAndPassword(login!!,password!!).addOnCompleteListener { task->
-                if (task.isSuccessful){
-                    newActivity()
-                }
-            }
-        }
+
+        /* if (loginPref.getString("email", null)!=null && passWordPref.getString("password",null)!=null){
+             val login= loginPref.getString("email",null)
+             val password=passWordPref.getString("password",null)
+             mAuth.signInWithEmailAndPassword(login!!,password!!).addOnCompleteListener { task->
+                 if (task.isSuccessful){
+                     newActivity()
+                 }
+             }
+         }*/
         initializeViews()
 
         setListeners()
@@ -82,6 +82,12 @@ class SignInActivity : AppCompatActivity() {
             mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        signInLoginEditor = signInLoginPref.edit()
+                        signInLoginEditor.putString("signInLogin",email)
+                        signInPasswordEditor = signInPasswordPref.edit()
+                        signInPasswordEditor.putString("signInPassword",password)
+                        signInLoginEditor.apply()
+                        signInPasswordEditor.apply()
                         Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
 
                         newActivity()
