@@ -12,11 +12,7 @@
         android:id="@+id/navigation_search"
         android:icon="@drawable/search"
         android:title="Search" />
-    <item
 
-        android:id="@+id/navigation_mycourses"
-        android:icon="@drawable/my_courses"
-        android:title="My Courses" />
     <item
         android:id="@+id/navigation_mycourses"
         android:icon="@drawable/ic_home_black_24dp"
