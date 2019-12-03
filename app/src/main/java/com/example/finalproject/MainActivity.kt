@@ -1,8 +1,7 @@
 package com.example.finalproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.finalproject.fragments.MyCoursesFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -12,9 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         auth = FirebaseAuth.getInstance()
-
-val fragment=MyCoursesFragment()
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container,fragment).commit()
 
     }
 }

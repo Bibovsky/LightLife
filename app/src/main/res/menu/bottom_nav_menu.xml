@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+
 
     <item
         android:id="@+id/navigation_diary"
@@ -16,13 +13,11 @@
         android:icon="@drawable/search"
         android:title="Search" />
     <item
-<<<<<<< Updated upstream
-=======
+
         android:id="@+id/navigation_mycourses"
         android:icon="@drawable/my_courses"
         android:title="My Courses" />
     <item
->>>>>>> Stashed changes
         android:id="@+id/navigation_chat"
         android:icon="@drawable/ic_chat"
         android:title="Chat" />

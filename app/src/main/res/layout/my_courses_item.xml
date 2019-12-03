@@ -15,8 +15,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:text="text"
         android:src="@color/colorPrimaryDark"
+        android:text="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,14 +66,15 @@
         app:layout_constraintBottom_toBottomOf="@+id/continue_course_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/continue_course_button" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
-    android:text="1234"
-    app:layout_constraintTop_toTopOf="@+id/chel_iv"
-    app:layout_constraintBottom_toBottomOf="@id/chel_iv"
-    app:layout_constraintStart_toEndOf="@+id/chel_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:text="1234"
+        app:layout_constraintBottom_toBottomOf="@id/chel_iv"
+        app:layout_constraintStart_toEndOf="@+id/chel_iv"
+        app:layout_constraintTop_toTopOf="@+id/chel_iv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
