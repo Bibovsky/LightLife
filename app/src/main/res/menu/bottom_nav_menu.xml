@@ -15,8 +15,8 @@
 
     <item
         android:id="@+id/navigation_mycourses"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/title_home" />
+        android:icon="@drawable/my_courses"
+        android:title="My courses" />
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/ic_chat"
