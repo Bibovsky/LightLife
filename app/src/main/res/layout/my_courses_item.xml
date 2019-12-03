@@ -3,78 +3,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="10dp"
-    android:background="@android:color/holo_green_light"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/my_courses_photo"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:src="@color/colorPrimaryDark"
-        android:text="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="10dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_green_light">
+
+                <ImageView
+                    android:id="@+id/my_courses_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@color/colorPrimaryDark"
+                    android:text="text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/my_courses_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="text"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_courses_photo"
+                    />
+
+                <TextView
+                    android:id="@+id/my_courses_description_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_courses_name_text_view" />
+
+                <Button
+                    android:id="@+id/continue_course_button"
+                    android:layout_width="154dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:drawableEnd="@drawable/button_image"
+                    android:text="Продолжить"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <ImageView
+                    android:id="@+id/chel_iv"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/chel"
+                    app:layout_constraintBottom_toBottomOf="@+id/continue_course_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/continue_course_button" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="1234"
+                    app:layout_constraintBottom_toBottomOf="@id/chel_iv"
+                    app:layout_constraintStart_toEndOf="@+id/chel_iv"
+                    app:layout_constraintTop_toTopOf="@+id/chel_iv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/my_courses_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="text"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_courses_photo"
-
-        />
-
-    <TextView
-        android:id="@+id/my_courses_description_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_courses_name_text_view" />
-
-    <Button
-        android:id="@+id/continue_course_button"
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:drawableEnd="@drawable/button_image"
-        android:text="Продолжить"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/chel_iv"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/chel"
-        app:layout_constraintBottom_toBottomOf="@+id/continue_course_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/continue_course_button" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:text="1234"
-        app:layout_constraintBottom_toBottomOf="@id/chel_iv"
-        app:layout_constraintStart_toEndOf="@+id/chel_iv"
-        app:layout_constraintTop_toTopOf="@+id/chel_iv" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
