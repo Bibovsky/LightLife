@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+<<<<<<< Updated upstream
     app:startDestination="@+id/navigation_home">
 
     <fragment
@@ -22,4 +23,31 @@
         android:name="com.example.finalproject.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+=======
+    app:startDestination="@+id/navigation_mycourses">
+
+
+    <fragment
+        android:id="@+id/navigation_diary"
+        android:name="com.example.finalproject.ui.diary.Diary"
+        tools:layout="@layout/fragment_diary" />
+
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.example.finalproject.ui.search.Search"
+
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/navigation_mycourses"
+        android:name="com.example.finalproject.fragments.MyCoursesFragment"
+        tools:layout="@layout/my_courses_fragment" />
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.example.finalproject.ui.chat.Chat"
+        tools:layout="@layout/my_courses_fragment" />
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.example.finalproject.ui.user.User"
+        tools:layout="@layout/my_courses_fragment" />
+>>>>>>> Stashed changes
 </navigation>

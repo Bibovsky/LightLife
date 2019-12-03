@@ -58,6 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
+        android:id="@+id/chel_iv"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginLeft="16dp"
@@ -65,7 +66,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/continue_course_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/continue_course_button" />
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:text="1234"
+    app:layout_constraintTop_toTopOf="@+id/chel_iv"
+    app:layout_constraintBottom_toBottomOf="@id/chel_iv"
+    app:layout_constraintStart_toEndOf="@+id/chel_iv"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 

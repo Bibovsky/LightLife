@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 
 class SignUpActivity : AppCompatActivity() {
+
     lateinit var loginEditor: SharedPreferences.Editor
     lateinit var passWordEditor:SharedPreferences.Editor
     lateinit var loginPref: SharedPreferences
