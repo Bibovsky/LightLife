@@ -10,6 +10,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
+import com.example.finalproject.AimRVAdapter
 import com.example.finalproject.BottomNavActivity
 import com.example.finalproject.R
 import com.example.finalproject.SignInActivity
@@ -29,16 +34,25 @@ class User:Fragment() {
     private lateinit var mDatebase: FirebaseDatabase
     private lateinit var mReference: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var aimsList:ArrayList<String>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        aimsList= arrayListOf()
+        for (i in 1..100){
+            aimsList.add(i.toString())
+        }
         val view=LayoutInflater.from(container!!.context).inflate(R.layout.fragment_user,container,false)
         mDatebase = FirebaseDatabase.getInstance()
         mReference = mDatebase.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
+        val aimsRV:RecyclerView=view.findViewById(R.id.aim_rv)
+        aimsRV.layoutManager=LinearLayoutManager(container.context,LinearLayoutManager.HORIZONTAL,false)
+        aimsRV.adapter=AimRVAdapter(aimsList)
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(aimsRV)
         val logout:Button=view.findViewById(R.id.logout)
         logout.setOnClickListener(){
             mAuth.signOut()
