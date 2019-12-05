@@ -29,6 +29,7 @@ class MyCourses:Fragment() {
         //val continueCourseButton:Button=view.findViewById(R.id.continue_course_button)
         val snapHelper: SnapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(myCoursesRV)
+
         myCoursesRV.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         myCoursesRV.adapter = MyCoursesAdapter(myCoursesList)
