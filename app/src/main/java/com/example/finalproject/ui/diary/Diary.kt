@@ -56,14 +56,16 @@ class Diary : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                diaryList.clear()
                 for(i in p0.children){
                     if (i.child("date").value.toString() == date){
                         var mDate=i.child("date").value.toString()
                         var mTime=i.child("time").value.toString()
                         var mDesc=i.child("action").value.toString()
-                        diaryList.clear()
+
                         diaryList.add(DiaryModel(mDate, mTime, mDesc))
                     }
+                    diaryList.sortBy { it.time }
                     diaryRec.adapter = DiaryAdapter(diaryList)
                     Log.e("firebase",i.child("date").value.toString())
                 }
