@@ -1,3 +1,3 @@
 package com.example.finalproject.models
 
-data class DiaryModel(val date:String,val action:String)
+data class DiaryModel(val date:String, val time:String,val action:String)

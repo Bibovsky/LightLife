@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/et_shape"
         android:layout_width="match_parent"
-        android:id="@+id/editText"
+        android:id="@+id/dateEdit"
         android:hint="Дата"
         android:layout_height="wrap_content"
         android:inputType="date"
@@ -22,7 +22,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/et_shape"
         android:hint="Время"
-        android:id="@+id/editText2"
+        android:id="@+id/timeEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="time" />
@@ -31,11 +31,11 @@
         android:layout_margin="10dp"
         android:background="@drawable/et_shape"
         android:hint="Описание"
-        android:id="@+id/editText3"
+        android:id="@+id/descEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+
         />
 
     <Button

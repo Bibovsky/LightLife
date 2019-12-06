@@ -19,7 +19,7 @@ class DiaryAdapter(val diaryList: MutableList<DiaryModel>) :
         var actionText = view.findViewById<TextView>(R.id.actionTextView)
         fun bind(position: Int) {
             actionText.text = diaryList[position].action
-            timeText.text = diaryList[position].date
+            timeText.text = diaryList[position].time
 
         }
     }
