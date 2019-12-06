@@ -14,11 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
-import kotlin.math.log
 
 class SignUpActivity : AppCompatActivity() {
     var list = arrayListOf<String>()
@@ -27,29 +25,34 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var signUpPasswordPref: SharedPreferences
     lateinit var signUpLoginEditor: SharedPreferences.Editor
     lateinit var signUpPasswordEditor: SharedPreferences.Editor
-    private lateinit var signUpButton: Button
-    private lateinit var mDatebase: FirebaseDatabase
-    private lateinit var mReference: DatabaseReference
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var email: EditText
-    private lateinit var login: EditText
-    private lateinit var password: EditText
-    private lateinit var confPass: EditText
-    private var imageUri: Uri?=null
+    lateinit var signUpButton: Button
+    lateinit var mDatebase: FirebaseDatabase
+    lateinit var mReference: DatabaseReference
+    lateinit var mAuth: FirebaseAuth
+    lateinit var email: EditText
+    lateinit var login: EditText
+    lateinit var password: EditText
+    lateinit var confPass: EditText
+    private var imageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        initSP()
+        initializeViews()
+        initDB()
+        setListeners()
+    }
+
+    fun initSP() {
+        signUpLoginPref = getSharedPreferences("signUpLoginPref", Context.MODE_PRIVATE)
+        signUpPasswordPref = getSharedPreferences("signUpPasswordPref", Context.MODE_PRIVATE)
+    }
+
+    fun initDB() {
         mDatebase = FirebaseDatabase.getInstance()
         mReference = mDatebase.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
-        signUpLoginPref = getSharedPreferences("signUpLoginPref", Context.MODE_PRIVATE)
-        signUpPasswordPref = getSharedPreferences("signUpPasswordPref", Context.MODE_PRIVATE)
-
-        initializeViews()
-
-        setListeners()
-
     }
 
     fun initializeViews() {
@@ -76,8 +79,8 @@ class SignUpActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
             imageUri = data.data!!
+            Log.e("data", data.toString())
             Glide.with(this).load(imageUri).centerCrop().circleCrop().into(userImageButton)
-
         }
     }
 
@@ -86,9 +89,7 @@ class SignUpActivity : AppCompatActivity() {
         val email = email.text.toString()
         val password = password.text.toString()
         val confirmPass = confPass.text.toString()
-
         if (email != "" && login != "" && password != "" && password == confirmPass) {
-
             mAuth
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener() { task ->
@@ -99,39 +100,38 @@ class SignUpActivity : AppCompatActivity() {
                         currentUserDb.child("email").setValue(email)
                         list = arrayListOf(email, password)
                         Log.e("LIST", list.toString())
-                        signUpLoginEditor = signUpLoginPref.edit()
-                        signUpLoginEditor.putString("signUpLoginPref", email)
-                        signUpPasswordEditor = signUpPasswordPref.edit()
-                        signUpPasswordEditor.putString("signUpPasswordPref", password)
-                        signUpLoginEditor.apply()
-                        signUpPasswordEditor.apply()
+                        fillSP(email, password)
                         Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
-                        if (imageUri!=null){
+                        if (imageUri != null) {
+                            currentUserDb.child("user_photo")
+                            uploadImageOnStorage()
+                        } else {
+                            imageUri =
+                                Uri.parse("android.resource://com.example.finalproject/drawable/ic_launcher_stock")
                             uploadImageOnStorage()
                         }
-                        else{
-                            imageUri=Uri.parse("android.resource://com.example.finalproject/drawable/ic_launcher_stock")
-                            uploadImageOnStorage()
-                        }
-
-
                         newActivity()
-
                     } else Toast.makeText(
                         this,
                         "Неправильная почта или пароль",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 }
-
         } else {
             Toast.makeText(this, "Заполните поля", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun newActivity() {
+    fun fillSP(email: String, password: String) {
+        signUpLoginEditor = signUpLoginPref.edit()
+        signUpLoginEditor.putString("signUpLoginPref", email)
+        signUpPasswordEditor = signUpPasswordPref.edit()
+        signUpPasswordEditor.putString("signUpPasswordPref", password)
+        signUpLoginEditor.apply()
+        signUpPasswordEditor.apply()
+    }
 
+    private fun newActivity() {
         val intent = Intent(this, BottomNavActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -141,14 +141,13 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun uploadImageOnStorage() {
-
         val filename = UUID.randomUUID().toString()
-
         val mRef = FirebaseStorage.getInstance().getReference("/images/$filename")
-
         mRef.putFile(imageUri!!).addOnCompleteListener {
             mRef.downloadUrl.addOnSuccessListener {
                 Log.e("FirebaseStorage", "$it")
+                val user=mAuth.currentUser!!.uid
+                mReference.child(user).child("uri").setValue(it.toString())
             }
         }
     }

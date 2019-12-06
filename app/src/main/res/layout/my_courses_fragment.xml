@@ -8,7 +8,7 @@
         android:orientation="horizontal"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="20dp"
         android:id="@+id/my_courses_rv"
         />
 </LinearLayout>

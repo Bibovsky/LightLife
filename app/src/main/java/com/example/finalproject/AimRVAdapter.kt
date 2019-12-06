@@ -1,6 +1,8 @@
 package com.example.finalproject
 
 import android.content.Context
+import android.content.Intent
+import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.models.Constant
+import com.example.finalproject.ui.user.User
 
 
 class AimRVAdapter(val aimsList: ArrayList<String>) :
@@ -29,7 +32,6 @@ class AimRVAdapter(val aimsList: ArrayList<String>) :
         val user = Constant.context
         fun bind(position: Int) {
             val winsList = user.getWinsList()
-            Log.e("List", winsList.toString())
             val winsRV = user.getRV()
             chronometer.text = "00:00:00"
             chronometer.setOnChronometerTickListener {
@@ -41,8 +43,10 @@ class AimRVAdapter(val aimsList: ArrayList<String>) :
                 val t =
                     (if (h < 10) "0$h" else h).toString() + ":" + (if (m < 10) "0$m" else m) + ":" + if (s < 10) "0$s" else s
                 chronometer.text = t
+                Constant.chronotext=chronometer.text.toString()
             }
             button.setOnClickListener() {
+
                 if (!isPlaying) {
                     chronometer.base = SystemClock.elapsedRealtime()
                     chronometer.start()
