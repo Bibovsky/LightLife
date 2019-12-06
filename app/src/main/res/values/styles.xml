@@ -10,4 +10,14 @@
 <style name="info">
     <item name="android:background">@drawable/round_tv_1</item>
 </style>
+    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:textColor">#fff</item>
+    </style>
 </resources>
