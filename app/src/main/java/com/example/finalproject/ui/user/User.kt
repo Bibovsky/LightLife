@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -28,7 +29,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_bottom_nav.*
 
 class User : Fragment() {
     lateinit var logout: Button
@@ -92,8 +92,7 @@ class User : Fragment() {
 
     fun initLists() {
         aimsList = arrayListOf()
-        /*    for (i in 1..100)
-                aimsList.add(AimsList(i.toString(), i.toString()))*/
+
         winsList = arrayListOf()
     }
 
@@ -108,10 +107,16 @@ class User : Fragment() {
 
         aimref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("FireBase", "Error")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
+                if (p0.childrenCount.toInt() == 0) {
+                    for (i in 1..100)
+                        aimsList.add(AimsList(i.toString(), i.toString()))
+                    pushData()
+
+                }
                 for (child in p0.children) {
                     Log.e("values", child.key.toString())
                     var aimName = child.child("name").value.toString()
@@ -132,11 +137,14 @@ class User : Fragment() {
     }
 
     fun pushData() {
+
         for (i in 0..aimsList.size - 1) {
             mDatebase.reference.child("Users").child(mUser.uid).child("aims").push()
                 .setValue(AimsList(aimsList[i].name, aimsList[i].desc))
 
         }
+
+
     }
 
     fun setListeners() {
@@ -144,7 +152,7 @@ class User : Fragment() {
             mAuth.signOut()
             initSP()
             clearSP()
-            val intent = Intent(container.context, SignInActivity::class.java)
+            val intent = Intent(context, SignInActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -166,10 +174,11 @@ class User : Fragment() {
     }
 
     fun loadProfilePhoto() {
+
         val imgRef = mDatebase.reference.child("Users").child(mUser.uid).child("uri")
         imgRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("Firebase", "ERROR")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -227,5 +236,13 @@ class User : Fragment() {
 
     fun getWinsList(): ArrayList<WinsList> {
         return winsList
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(context,Constant.isPlaying.toString(),Toast.LENGTH_SHORT).show()
+        if (Constant.isPlaying){
+
+        }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.finalproject
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,16 +31,16 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
     private lateinit var mUser: FirebaseUser
     lateinit var winsReference: DatabaseReference
     lateinit var aimsReference: DatabaseReference
+    var isPlaying = false
+    lateinit var aimSp:SharedPreferences
+    lateinit var aimSPEditor: SharedPreferences.Editor
 
     inner class AimViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
 
         val aimName: TextView = itemView.findViewById(R.id.aim_name)
         val aimDesc: TextView = itemview.findViewById(R.id.aim_desc)
         val startTimeTV: TextView = itemview.findViewById(R.id.start_aim_time)
-        val chronometer = itemView.findViewById<Chronometer>(R.id.chronometer)
         val button: Button = itemView.findViewById(R.id.aim_btn)
-
-        var isPlaying = false
         val user = Constant.context
         fun bind(position: Int) {
             mDatebase = FirebaseDatabase.getInstance()
@@ -50,34 +52,13 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
             val winsList = user.getWinsList()
             val aimsList = user.getAimsList()
 
-            // var startTime: String
+            var aimStartTime: String=""
             val aimsRV = user.getAimsRv()
             val winsRV = user.getWinsRv()
 
-            /* aimsRV.layoutManager =
-                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-             aimsRV.adapter = AimRVAdapter(aimsList)
-
-             for (i in 0..aimsList.size-1){
-                 aimsReference.push().setValue(AimsList(aimsList[i].name, aimsList[i].desc))
-             }
-             chronometer.base = SystemClock.elapsedRealtime()
-             chronometer.text = "00:00:00"
-             chronometer.setOnChronometerTickListener {
-                 val time =
-                     SystemClock.elapsedRealtime() - chronometer.base
-                 val h = (time / 3600000).toInt()
-                 val m = (time - h * 3600000).toInt() / 60000
-                 val s = (time - h * 3600000 - m * 60000).toInt() / 1000
-                 val t =
-                     (if (h < 10) "0$h" else h).toString() + ":" + (if (m < 10) "0$m" else m) + ":" + if (s < 10) "0$s" else s
-                 chronometer.text = t
-                 Constant.chronotext = t
-             }
- */
             winsReference.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.e("Firebase", "ERROR")
                 }
 
                 override fun onDataChange(p0: DataSnapshot) {
@@ -85,10 +66,10 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                     for (child in p0.children) {
                         var winName = child.child("name").value.toString()
                         var winDesc = child.child("desc").value.toString()
-                        var winFinishTime=child.child("finishTime").value.toString()
-                        /* var startTime = child.child("startTime").value.toString()
-                         var finishTime=child.child("finishTime").value.toString()*/
-                        wins.add(WinsList(winName, winDesc,winFinishTime))
+                        var winStartTime=child.child("startTime").value.toString()
+                        var winFinishTime = child.child("finishTime").value.toString()
+
+                        wins.add(WinsList(winName, winDesc,winStartTime, winFinishTime))
                     }
                     val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     winsRV.layoutManager = lm
@@ -98,16 +79,28 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
 
             })
+          /*  aimSp= (context as BottomNavActivity).getPreferences(MODE_PRIVATE)
 
+            if (aimSp.getString("start_time","")!=""){
+                startTimeTV.text=aimSp.getString("start_time","")
+
+            }*/
             button.setOnClickListener() {
+
 
                 if (!isPlaying) {
 
                     Log.e("Start", "started")
                     startTimeTV.text =
                         "Начало выполнения: " + SimpleDateFormat("hh:mm:ss").format(Date())
-                    //startTime = SimpleDateFormat("hh:mm:ss").format(Date())
+                    aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
                     isPlaying = true
+                    Constant.isPlaying=isPlaying
+/*
+                    aimSPEditor=aimSp.edit()
+                    aimSPEditor.putString("start_time",aimStartTime)
+                    aimSPEditor.apply()*/
+                    Log.e("sp",aimSp!!.getString("start_time",""))
                 } else if (isPlaying) {
 
                     Log.e("Stop", "Stopped")
@@ -119,6 +112,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                         WinsList(
                             aimsList[position].name,
                             aimsList[position].desc,
+                            aimStartTime,
                             SimpleDateFormat("hh:mm:ss").format(Date())
                         )
                     )
@@ -127,7 +121,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                         WinsList(
                             aimsList[position].name,
                             aimsList[position].desc,
-                            //aimsList[position].startTime,
+                            aimStartTime,
                             SimpleDateFormat("hh:mm:ss").format(Date())
 
                         )
@@ -140,7 +134,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                     query.addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            Log.e("Firebase", "ERROR")
                         }
 
                         override fun onDataChange(p0: DataSnapshot) {
@@ -179,4 +173,5 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
     override fun onBindViewHolder(holder: AimViewHolder, position: Int) {
         holder.bind(position)
     }
+
 }

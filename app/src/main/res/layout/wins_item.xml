@@ -55,17 +55,25 @@
                         android:layout_height="20dp"
                         android:src="@drawable/calendar_icon" />
 
-                    <TextView
-                        android:id="@+id/start_win_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/finish_win_time"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:text="Завершено" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/start_win_time"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/finish_win_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:text="Завершено" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
 

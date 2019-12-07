@@ -16,14 +16,13 @@ class WinsRVAdapter(val winsList: ArrayList<WinsList>) :
         val winName: TextView = itemview.findViewById(R.id.win_name)
         val winDesc: TextView = itemview.findViewById(R.id.win_desc)
         val winstartTime: TextView = itemview.findViewById(R.id.start_win_time)
-        val winFinishTime:TextView=itemview.findViewById(R.id.finish_win_time)
+        val winFinishTime: TextView = itemview.findViewById(R.id.finish_win_time)
 
         fun bind(position: Int) {
             winName.text = winsList[position].name
             winDesc.text = winsList[position].desc
-            winFinishTime.text="Завершено: "+winsList[position].finishTime
-          /*  startTime.text = winsList[position].startTime
-            finishTime.text=winsList[position].finishTime*/
+            winstartTime.text = "Начало выполнения: " + winsList[position].startTime
+            winFinishTime.text = "Завершено: " + winsList[position].finishTime
         }
     }
 
