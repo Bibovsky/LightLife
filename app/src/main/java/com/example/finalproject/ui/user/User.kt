@@ -21,7 +21,9 @@ import com.example.finalproject.AimRVAdapter
 import com.example.finalproject.R
 import com.example.finalproject.SignInActivity
 import com.example.finalproject.WinsRVAdapter
+import com.example.finalproject.models.AimsList
 import com.example.finalproject.models.Constant
+import com.example.finalproject.models.WinsList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -43,13 +45,12 @@ class User : Fragment() {
     private lateinit var mDatebase: FirebaseDatabase
     private lateinit var mReference: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var aimsList: ArrayList<String>
-    private var winsList: ArrayList<String> = arrayListOf()
+    private lateinit var aimsList: ArrayList<AimsList>
+    private var winsList: ArrayList<WinsList> = arrayListOf()
     private lateinit var winsRV: RecyclerView
     lateinit var aimsRV: RecyclerView
     lateinit var usernameTV: TextView
     lateinit var userPhoto: ImageView
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +58,6 @@ class User : Fragment() {
     ): View? {
         Constant.context = this
         initDB()
-
         val view = LayoutInflater.from(container!!.context)
             .inflate(R.layout.fragment_user, container, false)
         initLists()
@@ -65,23 +65,80 @@ class User : Fragment() {
         loadProfilePhoto()
         loadUserName()
         setListeners()
-        aimsRV.layoutManager =
-            LinearLayoutManager(container.context, LinearLayoutManager.HORIZONTAL, false)
-        aimsRV.adapter = AimRVAdapter(aimsList)
-        winsRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        winsRV.adapter = WinsRVAdapter(winsList)
-        val snapHelper: SnapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(aimsRV)
-        mReference = mDatebase.reference.child("Users").child(mUser.uid).child("name")
+        initLM()
+        initAdapters()
+        initAimsRV()
+        initSnapHelpers()
         return view
     }
-fun initLists(){
-    aimsList = arrayListOf()
-    for (i in 1..100) {
-        aimsList.add(i.toString())
+
+    fun initSnapHelpers() {
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(aimsRV)
+        val snapHelperWins: SnapHelper = LinearSnapHelper()
+        snapHelperWins.attachToRecyclerView(winsRV)
     }
-    winsList = arrayListOf()
-}
+
+    fun initLM() {
+        aimsRV.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        winsRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    fun initAdapters() {
+        aimsRV.adapter = AimRVAdapter(aimsList)
+        winsRV.adapter = WinsRVAdapter(winsList)
+    }
+
+    fun initLists() {
+        aimsList = arrayListOf()
+        /*    for (i in 1..100)
+                aimsList.add(AimsList(i.toString(), i.toString()))*/
+        winsList = arrayListOf()
+    }
+
+    fun initAimsRV() {
+
+
+        val aimref = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+        //aimref.push().setValue(aimsList)
+        //aimref.removeValue()
+        //pushData()
+
+
+        aimref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for (child in p0.children) {
+                    Log.e("values", child.key.toString())
+                    var aimName = child.child("name").value.toString()
+                    var aimDesc = child.child("desc").value.toString()
+                    aimsList.add(AimsList(aimName, aimDesc))
+
+
+                }
+
+                aimsRV.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                aimsRV.adapter = AimRVAdapter(aimsList)
+
+            }
+
+        })
+
+    }
+
+    fun pushData() {
+        for (i in 0..aimsList.size - 1) {
+            mDatebase.reference.child("Users").child(mUser.uid).child("aims").push()
+                .setValue(AimsList(aimsList[i].name, aimsList[i].desc))
+
+        }
+    }
+
     fun setListeners() {
         logout.setOnClickListener() {
             mAuth.signOut()
@@ -96,15 +153,16 @@ fun initLists(){
     }
 
     fun loadUserName() {
-        mDatebase.reference.child("Users").child(mUser.uid).child("name").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+        mDatebase.reference.child("Users").child(mUser.uid).child("name")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                usernameTV.text = p0.value.toString()
-            }
-        })
+                override fun onDataChange(p0: DataSnapshot) {
+                    usernameTV.text = p0.value.toString()
+                }
+            })
     }
 
     fun loadProfilePhoto() {
@@ -118,7 +176,6 @@ fun initLists(){
                 Glide.with(Constant.context).load(p0.value).centerCrop().circleCrop()
                     .into(userPhoto)
             }
-
         })
     }
 
@@ -146,38 +203,29 @@ fun initLists(){
         userPhoto = view.findViewById(R.id.user_photo)
         aimsRV = view.findViewById(R.id.aim_rv)
         winsRV = view.findViewById(R.id.wins_rv)
-
     }
 
     fun initDB() {
         mDatebase = FirebaseDatabase.getInstance()
-        mReference = mDatebase.reference.child("Users")
         mAuth = FirebaseAuth.getInstance()
         mUser = mAuth.currentUser!!
         mStorage = FirebaseStorage.getInstance()
-
-        val user = mAuth.currentUser!!.uid
-        val currentUserDb = mReference.child(user)
-        val imgRef = currentUserDb.child("uri")
-
-
-        Log.e("uri", imgRef.toString())
-
-
+        mReference = mDatebase.reference.child("Users").child(mUser.uid).child("name")
     }
 
-    fun getRV(): RecyclerView {
+    fun getAimsRv(): RecyclerView {
+        return aimsRV
+    }
+
+    fun getWinsRv(): RecyclerView {
         return winsRV
     }
 
-    fun getWinsList(): ArrayList<String> {
+    fun getAimsList(): ArrayList<AimsList> {
+        return aimsList
+    }
+
+    fun getWinsList(): ArrayList<WinsList> {
         return winsList
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        val chronoText = Constant.chronotext
-    }
-
-
 }
