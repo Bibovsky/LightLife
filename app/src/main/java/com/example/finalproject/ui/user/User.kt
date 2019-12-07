@@ -92,7 +92,6 @@ class User : Fragment() {
 
     fun initLists() {
         aimsList = arrayListOf()
-
         winsList = arrayListOf()
     }
 
@@ -113,7 +112,7 @@ class User : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.childrenCount.toInt() == 0) {
                     for (i in 1..100)
-                        aimsList.add(AimsList(i.toString(), i.toString()))
+                        aimsList.add(AimsList(i.toString(), i.toString(),false))
                     pushData()
 
                 }
@@ -121,7 +120,8 @@ class User : Fragment() {
                     Log.e("values", child.key.toString())
                     var aimName = child.child("name").value.toString()
                     var aimDesc = child.child("desc").value.toString()
-                    aimsList.add(AimsList(aimName, aimDesc))
+                    var isPlaying =child.child("isPlaying").value.toString().toBoolean()
+                    aimsList.add(AimsList(aimName, aimDesc,isPlaying))
 
 
                 }
@@ -140,7 +140,7 @@ class User : Fragment() {
 
         for (i in 0..aimsList.size - 1) {
             mDatebase.reference.child("Users").child(mUser.uid).child("aims").push()
-                .setValue(AimsList(aimsList[i].name, aimsList[i].desc))
+                .setValue(AimsList(aimsList[i].name, aimsList[i].desc,aimsList[i].isPlaying))
 
         }
 
