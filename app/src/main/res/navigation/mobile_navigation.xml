@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_diary"
-        android:name="com.example.finalproject.ui.diary.Diary"
+        android:name="com.example.finalproject.ui.diary.DiaryCalendar"
         android:label="Diary"
         tools:layout="@layout/fragment_diary" />
     <fragment

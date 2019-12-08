@@ -1,14 +1,18 @@
 package com.example.finalproject
 
+import android.app.Fragment
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import androidx.appcompat.app.AppCompatActivity
+
+
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.finalproject.ui.diary.Diary
 
 class BottomNavActivity : AppCompatActivity() {
 
@@ -30,5 +34,8 @@ class BottomNavActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
+    }
+    fun fragmentrepl(){
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment,Diary()).commit()
     }
 }

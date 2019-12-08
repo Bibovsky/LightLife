@@ -1,5 +1,7 @@
 package com.example.finalproject
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -21,9 +23,10 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var mReference: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
     private lateinit var saveBtn:Button
-    private lateinit var dateText:EditText
+    lateinit var dateText:String
     private lateinit var timeText:EditText
     private lateinit var descText:EditText
+    lateinit var datePref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,28 +37,26 @@ class AddEventActivity : AppCompatActivity() {
         mReference = mDatebase.reference.child("Users").child(mAuth.uid!!)
 
         saveBtn = findViewById(R.id.btnSave)
-        dateText = findViewById(R.id.dateEdit)
+
         timeText = findViewById(R.id.timeEdit)
         descText = findViewById(R.id.descEdit)
-        val slotsDate = PhoneNumberUnderscoreSlotsParser().parseSlots("__.__.____")
         val slotsTime = PhoneNumberUnderscoreSlotsParser().parseSlots("__:__")
-        val formatWatcherDate: FormatWatcher = MaskFormatWatcher(
-            MaskImpl.createTerminated(slotsDate)
-        )
+
         val formatWatcherTime: FormatWatcher = MaskFormatWatcher(
             MaskImpl.createTerminated(slotsTime)
         )
-        formatWatcherDate.installOn(dateText)
-        formatWatcherTime.installOn(timeText)
 
+        formatWatcherTime.installOn(timeText)
+        datePref = getSharedPreferences("selectedDate", Context.MODE_PRIVATE)
+        var dateText = datePref.getString("selectedDate","")
 
 
         saveBtn.setOnClickListener {
-            if(dateText.text.toString()!="" && timeText.text.toString()!="" && descText.text.toString()!=""
-                && dateText.text.toString().length==10 &&  timeText.text.toString().length==5) {
+            if(dateText!="" && timeText.text.toString()!="" && descText.text.toString()!=""
+                && dateText!!.length==10 &&  timeText.text.toString().length==5) {
                 mReference.child("events").push().setValue(
                     DiaryModel(
-                        dateText.text.toString(),
+                        dateText,
                         timeText.text.toString(),
                         descText.text.toString()
                     )

@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         app:cardCornerRadius="25dp"
-        app:cardBackgroundColor="#F8F8F8"
+        app:cardBackgroundColor="#D7ECFC"
         app:cardElevation="0dp">
 
         <TextView
@@ -34,7 +34,7 @@
         android:minHeight="60dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="#F8F8F8">
+        app:cardBackgroundColor="#D7ECFC">
 
         <LinearLayout
             android:layout_margin="5dp"

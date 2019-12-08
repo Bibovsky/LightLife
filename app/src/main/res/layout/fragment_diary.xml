@@ -13,7 +13,7 @@
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#EAEAEA"
+            android:background="#BCC3E5"
             app:title="@string/app_name" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -33,7 +33,7 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="12dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/add"
         app:backgroundTint="@android:color/white"

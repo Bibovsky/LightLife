@@ -1,6 +1,8 @@
 package com.example.finalproject.ui.diary
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +30,7 @@ class Diary : Fragment() {
     private lateinit var mDatebase: FirebaseDatabase
     private lateinit var mReference: DatabaseReference
     private lateinit var mAuth: FirebaseAuth
+    lateinit var datePref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +39,14 @@ class Diary : Fragment() {
     ): View? {
         val view = LayoutInflater.from(container!!.context)
             .inflate(R.layout.fragment_diary, container, false)
-
-        mTopToolbar = view.findViewById(R.id.my_toolbar);
+        datePref = activity!!.getSharedPreferences("selectedDate", Context.MODE_PRIVATE)
+        var date = datePref.getString("selectedDate","")
+        mTopToolbar = view.findViewById(R.id.my_toolbar)
 
         //val currentTime = DateFormat.getDateTimeInstance().toString()
-        val fmt = SimpleDateFormat("dd.MM.yyyy")
-        val date = fmt.format(Date())
+        //val fmt = SimpleDateFormat("dd.MM.yyyy")
+        //val date = fmt.format(Date())
+
         mDatebase = FirebaseDatabase.getInstance()
         mAuth = FirebaseAuth.getInstance()
         mReference = mDatebase.reference.child("Users").child(mAuth.uid!!).child("events")
