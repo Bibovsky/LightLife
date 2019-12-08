@@ -130,7 +130,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                                     "test",
                                     p0.child(child.key.toString()).child("playing").value.toString()
                                 )
-                                if (p0.child(child.key.toString()).child("playing").value.toString() == "false"){
+                                if (p0.child(child.key.toString()).child("playing").value.toString() == "false") {
                                     mDatebase.reference.child("Users").child(mUser.uid)
                                         .child("aims")
                                         .child(child.key.toString()).child("playing").setValue(true)
@@ -147,11 +147,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                                             Log.e("name", "SUCCESS time")
                                         }
                                 }
-
-
                             }
-
-
                         }
 
                     })
