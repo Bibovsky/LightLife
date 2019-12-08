@@ -1,15 +1,11 @@
 package com.example.finalproject
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Chronometer
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,8 +29,8 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
     lateinit var winsReference: DatabaseReference
     lateinit var aimsReference: DatabaseReference
     var isPlaying = false
-        //    lateinit var aimSp:SharedPreferences
-   // lateinit var aimSPEditor: SharedPreferences.Editor
+    //    lateinit var aimSp:SharedPreferences
+    // lateinit var aimSPEditor: SharedPreferences.Editor
 
     inner class AimViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
 
@@ -54,24 +50,55 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
             winsReference = mReference.child("wins")
             val winsList = user.getWinsList()
             val aimsList = user.getAimsList()
-
-            var aimStartTime: String=""
             val aimsRV = user.getAimsRv()
             val winsRV = user.getWinsRv()
+            var aimStartTime: String = "00:00:00"
+            val getIsPlayingData =
+                mDatebase.reference.child("Users").child(mUser.uid).child("aims")
 
+            getIsPlayingData.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("Firebase", "ERROR")
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    val timeList = arrayListOf<String>()
+                    for (child in p0.children) {
+
+                        Log.e("true", true.toString())
+                        timeList.add(child.child("startAimTime").value.toString())
+
+
+                        // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
+                    }
+                    if (timeList[position] == "00:00:00")
+                        startTimeTV.text = "Не начинал"
+                    else {
+                        startTimeTV.text =
+                            timeList[position]
+                        aimStartTime = startTimeTV.text.toString()
+                        button.text = "Закончить"
+                        isPlaying = true
+                    }
+
+
+                }
+
+            })
             winsReference.addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.e("Firebase", "ERROR")
                 }
+
                 override fun onDataChange(p0: DataSnapshot) {
                     var wins = arrayListOf<WinsList>()
                     for (child in p0.children) {
                         var winName = child.child("name").value.toString()
                         var winDesc = child.child("desc").value.toString()
-                        var winStartTime=child.child("startTime").value.toString()
+                        var winStartTime = child.child("startTime").value.toString()
                         var winFinishTime = child.child("finishTime").value.toString()
 
-                        wins.add(WinsList(winName, winDesc,winStartTime, winFinishTime))
+                        wins.add(WinsList(winName, winDesc, winStartTime, winFinishTime))
                     }
                     val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     winsRV.layoutManager = lm
@@ -81,27 +108,41 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
 
             })
-          /*  aimSp= (context as BottomNavActivity).getPreferences(MODE_PRIVATE)
+            /*val getIsPlayingData =
+                mDatebase.reference.child("Users").child(mUser.uid).child("aims")
 
-            if (aimSp.getString("start_time","")!=""){
-                startTimeTV.text=aimSp.getString("start_time","")
+            getIsPlayingData.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Log.e("Firebase", "ERROR")
+                }
 
-            }*/
+                override fun onDataChange(p0: DataSnapshot) {
+                    for (child in p0.children) {
+                        startTimeTV.text =
+                            "Начало выполнения: " + child.child("startAimTime").value.toString()
+                       // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
+                    }
+
+                }
+
+            })*/
+            /*  aimSp= (context as BottomNavActivity).getPreferences(MODE_PRIVATE)
+
+              if (aimSp.getString("start_time","")!=""){
+                  startTimeTV.text=aimSp.getString("start_time","")
+
+              }*/
             button.setOnClickListener() {
-                val mRef = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
 
                 if (!isPlaying) {
-                    //mRef.child("-LvXGXdlHcLzjwmUbjwA").child("name").setValue("fghjk")
-                  //  (context as BottomNavActivity).startService(Intent(context,AimService::class.java))
                     Log.e("Start", "started")
-                    startTimeTV.text =
-                        "Начало выполнения: " + SimpleDateFormat("hh:mm:ss").format(Date())
-                    aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
-                    isPlaying = true
-                    val query = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-                        .orderByChild("name").equalTo(aimsList[position].name)
 
-                    query.addValueEventListener(object : ValueEventListener {
+                    isPlaying = true
+                    val changeToTrue =
+                        mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+                            .orderByChild("name").equalTo(aimsList[position].name)
+
+                    changeToTrue.addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) {
                             Log.e("Firebase", "ERROR")
                         }
@@ -112,19 +153,68 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                                     .child(child.key.toString()).child("playing").setValue(true)
                                     .addOnSuccessListener {
                                         Log.e("name", "SUCCESS")
+
                                     }
+                                mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+                                    .child(child.key.toString()).child("startAimTime")
+                                    .setValue(SimpleDateFormat("hh:mm:ss").format(Date()))
+                                    .addOnSuccessListener {
+                                        Log.e("name", "SUCCESS time")
+                                        /*startTimeTV.text =
+                                            "Начало выполнения: " + SimpleDateFormat("hh:mm:ss").format(Date())
+                                        aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())*/
+                                    }
+
                             }
+
                         }
-                    })/*
-                    aimSPEditor=aimSp.edit()
-                    aimSPEditor.putString("start_time",aimStartTime)
-                    aimSPEditor.apply()*/
-                   // Log.e("sp",aimSp!!.getString("start_time",""))
+
+                    })
+                    /*val getIsPlayingData =
+                        mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+
+                    getIsPlayingData.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                            Log.e("Firebase", "ERROR")
+                        }
+
+                        override fun onDataChange(p0: DataSnapshot) {
+                            for (child in p0.children) {
+                                Log.e("time",child.child("startAimTime").value.toString())
+                                *//*startTimeTV.text =
+                                    "Начало выполнения: " + child.child("startAimTime").value.toString()*//*
+                                // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
+                            }
+
+                        }
+
+                    })*/
+                    /*startTimeTV.text =
+                        "Начало выполнения: " + SimpleDateFormat("hh:mm:ss").format(Date())
+                    aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())*/
                 } else if (isPlaying) {
                     //(context as BottomNavActivity).stopService(Intent(context as BottomNavActivity,AimService::class.java))
 
                     Log.e("Stop", "Stopped")
                     isPlaying = false
+                    /* val changeToFalse = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+                         .orderByChild("name").equalTo(aimsList[position].name)
+
+                     changeToFalse.addValueEventListener(object : ValueEventListener {
+                         override fun onCancelled(p0: DatabaseError) {
+                             Log.e("Firebase", "ERROR")
+                         }
+
+                         override fun onDataChange(p0: DataSnapshot) {
+                             for (child in p0.children) {
+                                 mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+                                     .child(child.key.toString()).child("playing").setValue(false)
+                                     .addOnSuccessListener {
+                                         Log.e("name", "SUCCESS")
+                                     }
+                             }
+                         }
+                     })*/
                     aimsRV.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     aimsRV.adapter = AimRVAdapter(aimsList)

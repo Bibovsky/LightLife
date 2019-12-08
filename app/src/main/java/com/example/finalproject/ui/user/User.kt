@@ -112,16 +112,16 @@ class User : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.childrenCount.toInt() == 0) {
                     for (i in 1..100)
-                        aimsList.add(AimsList(i.toString(), i.toString(),false))
+                        aimsList.add(AimsList(i.toString(), i.toString(),"00:00:00",false))
                     pushData()
 
                 }
                 for (child in p0.children) {
-                    Log.e("values", child.key.toString())
                     var aimName = child.child("name").value.toString()
                     var aimDesc = child.child("desc").value.toString()
+                    val startTime=child.child("startTime").value.toString()
                     var isPlaying =child.child("isPlaying").value.toString().toBoolean()
-                    aimsList.add(AimsList(aimName, aimDesc,isPlaying))
+                    aimsList.add(AimsList(aimName, aimDesc,startTime,isPlaying))
 
 
                 }
@@ -140,7 +140,7 @@ class User : Fragment() {
 
         for (i in 0..aimsList.size - 1) {
             mDatebase.reference.child("Users").child(mUser.uid).child("aims").push()
-                .setValue(AimsList(aimsList[i].name, aimsList[i].desc,aimsList[i].isPlaying))
+                .setValue(AimsList(aimsList[i].name, aimsList[i].desc,aimsList[i].startAimTime,aimsList[i].isPlaying))
 
         }
 
