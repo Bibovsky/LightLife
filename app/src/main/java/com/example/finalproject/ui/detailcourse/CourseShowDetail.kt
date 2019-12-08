@@ -20,6 +20,7 @@ import com.example.finalproject.adapters.detailcourse.ViewPagerAdapter
 import com.example.finalproject.models.DetailCourseModel
 import com.example.finalproject.ui.passingcourse.PassCourseActivity
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.activity_course_show_detail.*
@@ -28,7 +29,10 @@ import kotlinx.android.synthetic.main.activity_course_show_detail.*
 class CourseShowDetail : AppCompatActivity() {
 
     private val CHILD: String = "CourseData"
+    private val CHILD_MY_COURSES = "MyCourses"
     private val DEFAULT_DATA_FOR_SHARE = "I recommend you this course for learn!"
+    private lateinit var mReference: DatabaseReference
+    private lateinit var mAuth: FirebaseAuth
     private lateinit var titleCourse: CollapsingToolbarLayout
     private lateinit var categories: TextView
     private lateinit var numberPeople: TextView
@@ -55,7 +59,6 @@ class CourseShowDetail : AppCompatActivity() {
         val scrollView = findViewById<View>(R.id.nestedScrollView) as NestedScrollView
         scrollView.isFillViewport = true
 
-
         initializeViews()
 
         //get ID for this course
@@ -64,7 +67,8 @@ class CourseShowDetail : AppCompatActivity() {
 
         //for passing course
         startBtn.setOnClickListener {
-           val intent = Intent(this, PassCourseActivity::class.java)
+            addMyCourses(id)
+            val intent = Intent(this, PassCourseActivity::class.java)
             intent.putExtra("ID_COURSE", id)
             intent.putExtra("TITLE_COURSE", titleCourse.title)
             ContextCompat.startActivity(this, intent, bundleOf())
@@ -87,6 +91,7 @@ class CourseShowDetail : AppCompatActivity() {
                 setDataIntoParentActivity(model!!)
                 setDataIntoViewPager(model)
             }
+
             override fun onCancelled(p0: DatabaseError) {
                 //not implemented
             }
@@ -128,6 +133,13 @@ class CourseShowDetail : AppCompatActivity() {
         adapter.addFragment(reviewCourseFragment, "Отзывы")
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
+    }
+
+
+    private fun addMyCourses(list: String){
+        mAuth = FirebaseAuth.getInstance()
+        mReference = FirebaseDatabase.getInstance().reference.child(CHILD_MY_COURSES).child(mAuth.uid!!)
+        mReference.push().setValue(list)
     }
 
     /*Next three methods for SHARE*/

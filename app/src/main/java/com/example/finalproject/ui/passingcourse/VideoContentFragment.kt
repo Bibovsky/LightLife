@@ -30,6 +30,7 @@ class VideoContentFragment(val idCourse: String) : Fragment() {
         return view
     }
 
+
     private fun getDataForPassCourse(idCourse: String, view: View) {
         val list: ArrayList<VideoModel> = arrayListOf()
         val reference: DatabaseReference =

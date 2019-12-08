@@ -28,8 +28,7 @@
                     android:id="@+id/passingCourseImage"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ava" />
+                    android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -37,8 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Князь Андрей уезжал на другой день вечером. СтаКнязь Андрей уезжал на другой день вечером. СтаКнязь Андрей уезжал на другой день вечером. Старый князь, не отступая от своего порядка, после обеда ушел к себе. Маленькая княгиня была у золовки. Князь Андрей, одевшись в дорожный сюртук без эполет, в отведенных ему покоях укладывался с своим камердинером. \n\nСам осмотрев коляску и укладку чемоданов, он велел закладывать. В комнате оставались только те вещи, которые князь Андрей всегда брал с собой: шкатулка, большой серебряный погребец, два турецких пистолета и шашка — подарок отца, привезенный из-под Очакова. Все эти дорожные принадлежности были в большом порядке у князя Андрея: все было ново, чисто, в суконных чехлах, старательно завязано тесемочками."
-                android:textColor="#616161"></TextView>
+                android:textColor="#616161">
+            </TextView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
