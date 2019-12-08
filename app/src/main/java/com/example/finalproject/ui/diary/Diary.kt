@@ -3,11 +3,13 @@ package com.example.finalproject.ui.diary
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -37,12 +39,19 @@ class Diary : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = LayoutInflater.from(container!!.context)
             .inflate(R.layout.fragment_diary, container, false)
         datePref = activity!!.getSharedPreferences("selectedDate", Context.MODE_PRIVATE)
         var date = datePref.getString("selectedDate","")
         mTopToolbar = view.findViewById(R.id.my_toolbar)
+        /*mTopToolbar!!.setNavigationIcon(R.drawable.backbtn)
+        mTopToolbar!!.setNavigationOnClickListener {
+            fragmentManager!!.popBackStack()
+            fragmentManager!!.beginTransaction().replace(R.id.nav_host_fragment,DiaryCalendar()).commit()
+        }
 
+        mTopToolbar!!.getNavigationIcon()!!.setColorFilter(getResources().getColor(R.color.F2F3FA), PorterDuff.Mode.SRC_ATOP);*/
         //val currentTime = DateFormat.getDateTimeInstance().toString()
         //val fmt = SimpleDateFormat("dd.MM.yyyy")
         //val date = fmt.format(Date())

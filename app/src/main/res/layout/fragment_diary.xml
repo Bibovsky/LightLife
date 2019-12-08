@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#BCC3E5"
+            app:titleTextColor="#F2F3FA"
             app:title="@string/app_name" />
 
         <androidx.recyclerview.widget.RecyclerView

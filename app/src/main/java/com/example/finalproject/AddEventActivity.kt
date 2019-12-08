@@ -2,12 +2,14 @@ package com.example.finalproject
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.finalproject.models.DiaryModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -27,10 +29,22 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var timeText:EditText
     private lateinit var descText:EditText
     lateinit var datePref: SharedPreferences
+    private var mTopToolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
+
+        mTopToolbar = findViewById(R.id.adEvToolbar)
+        setSupportActionBar(mTopToolbar)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        mTopToolbar!!.getNavigationIcon()!!.setColorFilter(getResources().getColor(R.color.F2F3FA), PorterDuff.Mode.SRC_ATOP)
+        mTopToolbar!!.setNavigationOnClickListener {
+            finish()
+        }
+
 
         mDatebase = FirebaseDatabase.getInstance()
         mAuth = FirebaseAuth.getInstance()
@@ -61,9 +75,10 @@ class AddEventActivity : AppCompatActivity() {
                         descText.text.toString()
                     )
                 )
+                Toast.makeText(applicationContext,"Действие добавлено",Toast.LENGTH_SHORT).show()
                 finish()
             }else{
-                Toast.makeText(applicationContext,"Заполните все поля",Toast.LENGTH_SHORT)
+                Toast.makeText(applicationContext,"Заполните все поля",Toast.LENGTH_SHORT).show()
             }
 
         }
