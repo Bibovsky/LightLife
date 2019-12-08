@@ -276,12 +276,12 @@ class User : Fragment() {
                 Log.e("wins",winsCount.toString())
                 var winPron = ""
                 if (winsCount % 10 == 1) {
-                    winPron = "Цель"
+                    winPron = "Победа"
                 } else if (winsCount % 10 == 11 || winsCount % 10 == 12 || winsCount % 10 == 13 ||winsCount % 10 == 14) {
-                    winPron = "Целей"
+                    winPron = "Побед"
                 } else if (winsCount % 10 >= 2 && winsCount <= 4) {
-                    winPron = "Цели"
-                } else winPron = "Целей"
+                    winPron = "Победв"
+                } else winPron = "Побед"
                 Log.e("winscount",winsCount.toString())
                 winTV.text = winsCount.toString()
                 winName.text = winPron
