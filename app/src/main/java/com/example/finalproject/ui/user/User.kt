@@ -73,6 +73,7 @@ class User : Fragment() {
         initAdapters()
         initAimsRV()
         initSnapHelpers()
+        winsPron()
         return view
     }
 
@@ -133,17 +134,7 @@ class User : Fragment() {
             }
 
         })
-        val winRef = mDatebase.reference.child("Users").child(mUser.uid).child("wins")
-        winRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                winsPron(p0.childrenCount)
-            }
-
-        })
 
     }
 
@@ -273,16 +264,30 @@ class User : Fragment() {
         aimName.text = aimPron
     }
 
-    fun winsPron(childrenCount: Long) {
-        var winPron = ""
-        if (childrenCount.toInt() % 10 == 1) {
-            winPron = "Цель"
-        } else if (childrenCount.toInt() % 10 == 11 || childrenCount.toInt() % 10 == 12 || childrenCount.toInt() % 10 == 13 ||childrenCount.toInt() % 10 == 14) {
-            winPron = "Целей"
-        } else if (childrenCount.toInt() % 10 >= 2 && childrenCount.toInt() <= 4) {
-            winPron = "Цели"
-        } else winPron = "Целей"
-        winTV.text = winsCount.toString()
-        winName.text = winPron
+    fun winsPron() {
+        val winRef = mDatebase.reference.child("Users").child(mUser.uid).child("wins")
+        winRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                winsCount=p0.childrenCount.toInt()
+                Log.e("wins",winsCount.toString())
+                var winPron = ""
+                if (winsCount % 10 == 1) {
+                    winPron = "Цель"
+                } else if (winsCount % 10 == 11 || winsCount % 10 == 12 || winsCount % 10 == 13 ||winsCount % 10 == 14) {
+                    winPron = "Целей"
+                } else if (winsCount % 10 >= 2 && winsCount <= 4) {
+                    winPron = "Цели"
+                } else winPron = "Целей"
+                Log.e("winscount",winsCount.toString())
+                winTV.text = winsCount.toString()
+                winName.text = winPron
+            }
+
+        })
+
     }
 }
