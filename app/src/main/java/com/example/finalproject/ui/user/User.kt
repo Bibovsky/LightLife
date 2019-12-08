@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -51,6 +50,11 @@ class User : Fragment() {
     lateinit var aimsRV: RecyclerView
     lateinit var usernameTV: TextView
     lateinit var userPhoto: ImageView
+    lateinit var aimName: TextView
+    lateinit var aimTV: TextView
+    lateinit var winTV: TextView
+    lateinit var winName: TextView
+    var winsCount = 0
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -99,10 +103,6 @@ class User : Fragment() {
 
 
         val aimref = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-        //aimref.push().setValue(aimsList)
-        //aimref.removeValue()
-        //pushData()
-
 
         aimref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -112,16 +112,16 @@ class User : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.childrenCount.toInt() == 0) {
                     for (i in 1..100)
-                        aimsList.add(AimsList(i.toString(), i.toString(),"00:00:00",false))
+                        aimsList.add(AimsList(i.toString(), i.toString(), "00:00:00", false))
                     pushData()
 
                 }
                 for (child in p0.children) {
                     var aimName = child.child("name").value.toString()
                     var aimDesc = child.child("desc").value.toString()
-                    val startTime=child.child("startTime").value.toString()
-                    var isPlaying =child.child("isPlaying").value.toString().toBoolean()
-                    aimsList.add(AimsList(aimName, aimDesc,startTime,isPlaying))
+                    val startTime = child.child("startTime").value.toString()
+                    var isPlaying = child.child("isPlaying").value.toString().toBoolean()
+                    aimsList.add(AimsList(aimName, aimDesc, startTime, isPlaying))
 
 
                 }
@@ -129,7 +129,18 @@ class User : Fragment() {
                 aimsRV.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 aimsRV.adapter = AimRVAdapter(aimsList)
+                aimsPron(p0)
+            }
 
+        })
+        val winRef = mDatebase.reference.child("Users").child(mUser.uid).child("wins")
+        winRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                winsPron(p0.childrenCount)
             }
 
         })
@@ -140,7 +151,14 @@ class User : Fragment() {
 
         for (i in 0..aimsList.size - 1) {
             mDatebase.reference.child("Users").child(mUser.uid).child("aims").push()
-                .setValue(AimsList(aimsList[i].name, aimsList[i].desc,aimsList[i].startAimTime,aimsList[i].isPlaying))
+                .setValue(
+                    AimsList(
+                        aimsList[i].name,
+                        aimsList[i].desc,
+                        aimsList[i].startAimTime,
+                        aimsList[i].isPlaying
+                    )
+                )
 
         }
 
@@ -207,8 +225,12 @@ class User : Fragment() {
     }
 
     fun initViews(view: View) {
+        winTV = view.findViewById(R.id.wins_tv)
+        winName = view.findViewById(R.id.win_name_tv)
+        aimName = view.findViewById(R.id.aim_name_tv)
+        aimTV = view.findViewById(R.id.aims_tv)
         logout = view.findViewById(R.id.logout)
-        usernameTV = view.findViewById<TextView>(R.id.user_name_tv)
+        usernameTV = view.findViewById(R.id.user_name_tv)
         userPhoto = view.findViewById(R.id.user_photo)
         aimsRV = view.findViewById(R.id.aim_rv)
         winsRV = view.findViewById(R.id.wins_rv)
@@ -238,11 +260,29 @@ class User : Fragment() {
         return winsList
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Toast.makeText(context,Constant.isPlaying.toString(),Toast.LENGTH_SHORT).show()
-        if (Constant.isPlaying){
+    fun aimsPron(p0: DataSnapshot) {
+        var aimPron = ""
+        if (Constant.currentAims % 10 == 1) {
+            aimPron = "Цель"
+        } else if (Constant.currentAims % 10 == 11 || Constant.currentAims % 10 == 12 || Constant.currentAims % 10 == 13 || Constant.currentAims % 10 == 14) {
+            aimPron = "Целей"
+        } else if (Constant.currentAims % 10 >= 2 && Constant.currentAims <= 4) {
+            aimPron = "Цели"
+        } else aimPron = "Целей"
+        aimTV.text = Constant.currentAims.toString()
+        aimName.text = aimPron
+    }
 
-        }
+    fun winsPron(childrenCount: Long) {
+        var winPron = ""
+        if (childrenCount.toInt() % 10 == 1) {
+            winPron = "Цель"
+        } else if (childrenCount.toInt() % 10 == 11 || childrenCount.toInt() % 10 == 12 || childrenCount.toInt() % 10 == 13 ||childrenCount.toInt() % 10 == 14) {
+            winPron = "Целей"
+        } else if (childrenCount.toInt() % 10 >= 2 && childrenCount.toInt() <= 4) {
+            winPron = "Цели"
+        } else winPron = "Целей"
+        winTV.text = winsCount.toString()
+        winName.text = winPron
     }
 }
