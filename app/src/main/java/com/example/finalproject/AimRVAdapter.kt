@@ -70,45 +70,46 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                         // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
                     }
-                    if (timeList[position] == "00:00:00")
-                        startTimeTV.text = "Не начинал"
-                    else {
-                        startTimeTV.text =
-                            timeList[position]
-                        aimStartTime = startTimeTV.text.toString()
-                        button.text = "Закончить"
-                        isPlaying = true
+                    try {
+                        startTimeTV.text = "Начало: " +
+                                timeList[position]
+                        aimStartTime =startTimeTV.text.toString()
+
+
+                    } catch (err: IndexOutOfBoundsException) {
                     }
 
-
-                }
-
-            })
-            winsReference.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.e("Firebase", "ERROR")
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    var wins = arrayListOf<WinsList>()
-                    for (child in p0.children) {
-                        var winName = child.child("name").value.toString()
-                        var winDesc = child.child("desc").value.toString()
-                        var winStartTime = child.child("startTime").value.toString()
-                        var winFinishTime = child.child("finishTime").value.toString()
-
-                        wins.add(WinsList(winName, winDesc, winStartTime, winFinishTime))
-                    }
-                    val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    winsRV.layoutManager = lm
-                    winsRV.adapter = WinsRVAdapter(wins)
-                    lm.scrollToPosition(WinsRVAdapter(wins).itemCount - 1)
                 }
 
 
             })
+            winsReference.addValueEventListener(
+                object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.e("Firebase", "ERROR")
+                    }
 
-            button.setOnClickListener() {
+                    override fun onDataChange(p0: DataSnapshot) {
+                        var wins = arrayListOf<WinsList>()
+                        for (child in p0.children) {
+                            var winName = child.child("name").value.toString()
+                            var winDesc = child.child("desc").value.toString()
+                            var winStartTime = child.child("startTime").value.toString()
+                            var winFinishTime = child.child("finishTime").value.toString()
+
+                            wins.add(WinsList(winName, winDesc, winStartTime, winFinishTime))
+                        }
+                        val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        winsRV.layoutManager = lm
+                        winsRV.adapter = WinsRVAdapter(wins)
+                        lm.scrollToPosition(WinsRVAdapter(wins).itemCount - 1)
+                    }
+
+
+                })
+
+            button.setOnClickListener()
+            {
 
                 if (!aimsList[position].isPlaying) {
                     // Log.e("Start", "started")
@@ -152,6 +153,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                     })
 
+                    //button.text="Закончить"
                 } else if (aimsList[position].isPlaying) {
 
                     Log.e("Stop", "Stopped")
@@ -204,7 +206,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
 
                 }
-                button.text = if (isPlaying!!) "Закончить" else "Начать"
+                // button.text = if (aimsList[position].isPlaying!!) "Закончить" else "Начать"
 
             }
             aimName.text = aimsList[position].name

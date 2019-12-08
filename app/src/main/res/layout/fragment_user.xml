@@ -47,12 +47,12 @@
             app:layout_constraintTop_toBottomOf="@+id/user_name_tv">
 
             <LinearLayout
-                android:gravity="center_vertical"
-
                 android:id="@+id/linearLayout4"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_tv_3"
+                android:background="@drawable/head_gradient"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,22 +69,22 @@
                     />
 
                 <TextView
-                    android:textSize="10sp"
                     android:id="@+id/win_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="побед"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="center_vertical"
-
                 android:id="@+id/linearLayout2"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_tv_1"
+                android:background="@drawable/head_gradient"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -102,20 +102,20 @@
                     />
 
                 <TextView
-                    android:textSize="10sp"
                     android:id="@+id/course_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="курса"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="10sp" />
             </LinearLayout>
 
 
             <LinearLayout
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_tv_2"
+                android:background="@drawable/head_gradient"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
@@ -133,12 +133,12 @@
                     />
 
                 <TextView
-                    android:textSize="10sp"
                     android:id="@+id/aim_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="целей"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="10sp" />
             </LinearLayout>
 
 
@@ -155,90 +155,100 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_info_const">
 
-        <LinearLayout
-
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/logout"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/linearLayout3"
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/logout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/aims"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="Цели"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/aim_rv"
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginVertical="10dp"
-                    android:clipToPadding="false"
-                    android:paddingHorizontal="20dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/aims" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/aims"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:text="Цели"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/logout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/aim_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginVertical="10dp"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/aims" />
 
-                <TextView
-                    android:id="@+id/wins"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:text="Победы"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/aim_rv" />
+                </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/wins_rv"
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginVertical="10dp"
-                    android:clipToPadding="false"
-                    android:paddingHorizontal="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/wins" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:text="Победы"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/aim_rv" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/wins_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginVertical="10dp"
+                        android:clipToPadding="false"
+                        android:paddingHorizontal="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/wins" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LOGOUT"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="LOGOUT"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

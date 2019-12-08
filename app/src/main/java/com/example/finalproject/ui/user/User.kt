@@ -112,8 +112,10 @@ class User : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.childrenCount.toInt() == 0) {
-                    for (i in 1..100)
-                        aimsList.add(AimsList(i.toString(), i.toString(), "00:00:00", false))
+                        aimsList.add(AimsList("Бег","Пробежка каждый день, время увеличивайте каждый раз на минуту", "Не начинал", false))
+                        aimsList.add(AimsList("Никакого фастфуда!","Полностью исключите из своего рациона фастфуд.", "Не начинал", false))
+                        aimsList.add(AimsList("Вода","Вам необходимо пить по 2 литра воды в день.", "Не начинал", false))
+                        aimsList.add(AimsList("Сон","Ложитесь спать не позднее 23:00 и спите не меньше 8 часов в сутки.", "Не начинал", false))
                     pushData()
 
                 }

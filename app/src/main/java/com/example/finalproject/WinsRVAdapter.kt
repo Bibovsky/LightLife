@@ -21,7 +21,7 @@ class WinsRVAdapter(val winsList: ArrayList<WinsList>) :
         fun bind(position: Int) {
             winName.text = winsList[position].name
             winDesc.text = winsList[position].desc
-            winstartTime.text = "Начало выполнения: " + winsList[position].startTime
+            winstartTime.text = winsList[position].startTime
             winFinishTime.text = "Завершено: " + winsList[position].finishTime
         }
     }
