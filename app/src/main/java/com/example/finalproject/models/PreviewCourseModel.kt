@@ -1,6 +1,6 @@
 package com.example.finalproject.models
 
-data class PreviewCourseData(
+data class PreviewCourseModel(
     var id: String = "",
     var title: String = "",
     var description: String = "",

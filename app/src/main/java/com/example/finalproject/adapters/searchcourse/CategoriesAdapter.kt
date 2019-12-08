@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
-import com.example.finalproject.models.PreviewCourseData
+import com.example.finalproject.models.PreviewCourseModel
 import com.google.firebase.database.*
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import java.util.ArrayList
@@ -53,23 +53,23 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
 
 
     private fun setListCourse(headerSection: String) {
-        val list: ArrayList<PreviewCourseData> = arrayListOf()
+        val list: ArrayList<PreviewCourseModel> = arrayListOf()
         val ref: DatabaseReference = FirebaseDatabase.getInstance().reference.child(CHILD)
 
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 p0.children.forEach {
-                    val dataCourseData: PreviewCourseData? =
-                        it.getValue(PreviewCourseData::class.java)
+                    val dataCourseModel: PreviewCourseModel? =
+                        it.getValue(PreviewCourseModel::class.java)
                     list.add(
-                        PreviewCourseData(
+                        PreviewCourseModel(
                             it.key!!,
-                            dataCourseData!!.title,
-                            dataCourseData.description,
-                            dataCourseData.nameSection,
-                            dataCourseData.rating,
-                            dataCourseData.numberPeople,
-                            dataCourseData.imageUrl
+                            dataCourseModel!!.title,
+                            dataCourseModel.description,
+                            dataCourseModel.nameSection,
+                            dataCourseModel.rating,
+                            dataCourseModel.numberPeople,
+                            dataCourseModel.imageUrl
                         )
                     )
                 }
@@ -83,9 +83,9 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
     }
 
 
-    private fun createSectionCoursesRecycler(list: ArrayList<PreviewCourseData>, headerSection: String) {
+    private fun createSectionCoursesRecycler(list: ArrayList<PreviewCourseModel>, headerSection: String) {
         val sectionedAdapter = SectionedRecyclerViewAdapter()
-        val map = LinkedHashMap<String, ArrayList<PreviewCourseData>>()
+        val map = LinkedHashMap<String, ArrayList<PreviewCourseModel>>()
 
         val filteredCourses = getCoursesOneSection(list, headerSection)
         map[headerSection] = filteredCourses
@@ -112,9 +112,9 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
     }
 
 
-    private fun getCoursesOneSection(list: ArrayList<PreviewCourseData>, nameSection: String): ArrayList<PreviewCourseData> {
-        val listOneSection: ArrayList<PreviewCourseData> = arrayListOf()
-        val strIterable: Iterator<PreviewCourseData> = list.iterator()
+    private fun getCoursesOneSection(list: ArrayList<PreviewCourseModel>, nameSection: String): ArrayList<PreviewCourseModel> {
+        val listOneSection: ArrayList<PreviewCourseModel> = arrayListOf()
+        val strIterable: Iterator<PreviewCourseModel> = list.iterator()
 
         while (strIterable.hasNext()) {
             val value = strIterable.next()

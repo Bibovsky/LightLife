@@ -10,14 +10,14 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.finalproject.R
-import com.example.finalproject.models.PreviewCourseData
+import com.example.finalproject.models.PreviewCourseModel
 import com.example.finalproject.ui.detailcourse.CourseShowDetail
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 
 class CoursesSectionAdapter(
     private val title: String,
-    private val list: List<PreviewCourseData>,
+    private val list: List<PreviewCourseModel>,
     private val context: Context
 ) : Section(
     SectionParameters

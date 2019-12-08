@@ -13,6 +13,10 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <color name="StatusBar">
+        #BCC3E5
+    </color>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

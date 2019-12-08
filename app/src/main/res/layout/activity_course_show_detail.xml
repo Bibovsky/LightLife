@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="#BCC3E5"
                 android:background="#FFFFFF"
                 app:expandedTitleGravity="center|center_horizontal"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -143,8 +143,8 @@
                         android:layout_height="wrap_content"
                         app:tabBackground="@android:color/white"
                         app:tabGravity="fill"
-                        app:tabIndicatorColor="#484848"
-                        app:tabIndicatorHeight="2px"
+                        app:tabIndicatorColor="#BCC3E5"
+                        app:tabIndicatorHeight="4px"
                         app:tabMode="fixed"
                         app:tabTextColor="#5B5B5B" />
                 </com.google.android.material.appbar.AppBarLayout>

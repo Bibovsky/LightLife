@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.example.finalproject.R
 import com.example.finalproject.adapters.detailcourse.ViewPagerAdapter
-import com.example.finalproject.models.DetailCourseData
+import com.example.finalproject.models.DetailCourseModel
 import com.example.finalproject.ui.passingcourse.PassCourseActivity
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.firebase.database.*
@@ -62,8 +62,11 @@ class CourseShowDetail : AppCompatActivity() {
         val id = intent.getStringExtra("ID")!!
         getDataCourse(id)
 
+        //for passing course
         startBtn.setOnClickListener {
            val intent = Intent(this, PassCourseActivity::class.java)
+            intent.putExtra("ID_COURSE", id)
+            intent.putExtra("TITLE_COURSE", titleCourse.title)
             ContextCompat.startActivity(this, intent, bundleOf())
         }
     }
@@ -80,9 +83,9 @@ class CourseShowDetail : AppCompatActivity() {
             FirebaseDatabase.getInstance().reference.child(CHILD).child(id)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                val data: DetailCourseData? = p0.getValue(DetailCourseData::class.java)
-                setDataIntoParentActivity(data!!)
-                setDataIntoViewPager(data)
+                val model: DetailCourseModel? = p0.getValue(DetailCourseModel::class.java)
+                setDataIntoParentActivity(model!!)
+                setDataIntoViewPager(model)
             }
             override fun onCancelled(p0: DatabaseError) {
                 //not implemented
@@ -91,14 +94,14 @@ class CourseShowDetail : AppCompatActivity() {
     }
 
 
-    private fun setDataIntoParentActivity(data: DetailCourseData) {
-        titleCourse.title = data.title
-        rating.text = data.rating.toString()
-        categories.text = data.nameSection
-        numberPeople.text = data.numberPeople.toString()
+    private fun setDataIntoParentActivity(model: DetailCourseModel) {
+        titleCourse.title = model.title
+        rating.text = model.rating.toString()
+        categories.text = model.nameSection
+        numberPeople.text = model.numberPeople.toString()
 
         Glide.with(this)
-            .load(data.imageUrl)
+            .load(model.imageUrl)
             .apply(bitmapTransform(BlurTransformation(10, 3)))
             .into(imageView)
     }
@@ -114,11 +117,11 @@ class CourseShowDetail : AppCompatActivity() {
     }
 
 
-    private fun setDataIntoViewPager(data: DetailCourseData) {
+    private fun setDataIntoViewPager(model: DetailCourseModel) {
         val adapter =
             ViewPagerAdapter(supportFragmentManager)
         descriptionCourseFragment =
-            DescriptionCourseFragment(data)
+            DescriptionCourseFragment(model)
         reviewCourseFragment = ReviewCourseFragment()
 
         adapter.addFragment(descriptionCourseFragment, "Описание")

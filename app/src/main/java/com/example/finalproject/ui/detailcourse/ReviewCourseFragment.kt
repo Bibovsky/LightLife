@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.adapters.detailcourse.ReviewCourseAdapter
-import com.example.finalproject.models.DetailCourseData
+import com.example.finalproject.models.DetailCourseModel
 import com.example.finalproject.models.ReviewModel
 import com.google.firebase.database.*
 
@@ -24,13 +24,11 @@ class ReviewCourseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_detail_review_course, container, false)!!
+        val view = inflater.inflate(R.layout.fragment_detail_review_course, container, false)!!
 
         initRecyclerReviews(view)
         return view
     }
-
-
 
 
     private fun initRecyclerReviews(view: View) {
@@ -57,7 +55,7 @@ class ReviewCourseFragment : Fragment() {
             FirebaseDatabase.getInstance().reference.child(CHILD).child(id)
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
-                val data: DetailCourseData? = p0.getValue(DetailCourseData::class.java)
+                val model: DetailCourseModel? = p0.getValue(DetailCourseModel::class.java)
                 TODO()
             }
 

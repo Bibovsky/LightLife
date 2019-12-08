@@ -1,6 +1,6 @@
 package com.example.finalproject.models
 
-data class DetailCourseData(
+data class DetailCourseModel(
     var title: String = "",
     var description: String = "",
     var nameSection: String = "",
@@ -8,5 +8,7 @@ data class DetailCourseData(
     var numberPeople: Int = 0,
     var imageUrl: String = "",
     var lang: String = "",
-    var hoursForPass: Int = 0
+    var hoursForPass: Int = 0/*,
+    var dataVideoPassCourse: ArrayList<VideoModel>,
+    var dataTextPassCourse: ArrayList<TextPassCourseModel>*/
 )
