@@ -277,10 +277,10 @@ class User : Fragment() {
                 var winPron = ""
                 if (winsCount % 10 == 1) {
                     winPron = "Победа"
-                } else if (winsCount % 10 == 11 || winsCount % 10 == 12 || winsCount % 10 == 13 ||winsCount % 10 == 14) {
+                } else if (winsCount == 11 || winsCount == 12 || winsCount == 13 ||winsCount== 14) {
                     winPron = "Побед"
-                } else if (winsCount % 10 >= 2 && winsCount <= 4) {
-                    winPron = "Победв"
+                } else if (winsCount >= 2 && winsCount <= 4) {
+                    winPron = "Побед"
                 } else winPron = "Побед"
                 Log.e("winscount",winsCount.toString())
                 winTV.text = winsCount.toString()
