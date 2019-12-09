@@ -1,5 +1,6 @@
 package com.example.finalproject
 
+import android.app.Fragment
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
@@ -11,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.finalproject.ui.diary.Diary
 
 class BottomNavActivity : AppCompatActivity() {
 
@@ -40,5 +42,7 @@ class BottomNavActivity : AppCompatActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBar)
+    fun fragmentrepl(){
+        supportFragmentManager.beginTransaction().replace(R.id.nav_host_fragment,Diary()).commit()
     }
 }

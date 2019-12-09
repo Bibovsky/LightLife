@@ -33,6 +33,8 @@
         <activity
             android:name=".CheckAuthActivity"
             android:screenOrientation="portrait">
+        <activity android:name=".AddEventActivity"></activity>
+        <activity android:name=".CheckAuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
