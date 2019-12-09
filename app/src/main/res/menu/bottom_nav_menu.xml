@@ -6,23 +6,23 @@
     <item
         android:id="@+id/navigation_diary"
         android:icon="@drawable/diary"
-        android:title="Diary" />
+        android:title="" />
 
     <item
         android:id="@+id/navigation_search"
         android:icon="@drawable/search"
-        android:title="Search" />
+        android:title="" />
 
     <item
         android:id="@+id/navigation_mycourses"
         android:icon="@drawable/my_courses"
-        android:title="My courses" />
+        android:title="" />
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/chat"
-        android:title="Chat" />
+        android:title="" />
     <item
         android:id="@+id/navigation_user"
         android:icon="@drawable/user"
-        android:title="User" />
+        android:title="" />
 </menu>

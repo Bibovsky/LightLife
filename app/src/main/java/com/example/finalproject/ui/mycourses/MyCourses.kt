@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.example.finalproject.MyCoursesAdapter
+import com.example.finalproject.adapters.my_courses_adapter.MyCoursesAdapter
 import com.example.finalproject.R
 import com.example.finalproject.models.PreviewCourseModel
 import com.google.firebase.auth.FirebaseAuth
@@ -93,6 +93,15 @@ class MyCourses : Fragment() {
         snapHelper.attachToRecyclerView(myCoursesRV)
         myCoursesRV.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         myCoursesRV.adapter = MyCoursesAdapter(list, context!!)
+
+        myCoursesRV.adapter =
+            MyCoursesAdapter(
+                myCoursesList
+            )
+        return view
+
+
     }
 }

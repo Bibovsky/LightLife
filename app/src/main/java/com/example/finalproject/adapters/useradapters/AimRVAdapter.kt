@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.adapters.useradapters
 
 import android.content.Context
 import android.util.Log
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.example.finalproject.models.AimsList
 import com.example.finalproject.models.Constant
 import com.example.finalproject.models.WinsList
@@ -17,7 +18,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
@@ -71,51 +71,58 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                         // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
                     }
-                    if (timeList[position] == "00:00:00")
-                        startTimeTV.text = "Не начинал"
-                    else {
-                        startTimeTV.text =
-                            timeList[position]
+                    try {
+                        startTimeTV.text = "Начало: " +
+                                timeList[position]
                         aimStartTime = startTimeTV.text.toString()
-                        button.text = "Закончить"
-                        isPlaying = true
+
+
+                    } catch (err: IndexOutOfBoundsException) {
                     }
 
-
-                }
-
-            })
-            winsReference.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    Log.e("Firebase", "ERROR")
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    var wins = arrayListOf<WinsList>()
-                    for (child in p0.children) {
-                        var winName = child.child("name").value.toString()
-                        var winDesc = child.child("desc").value.toString()
-                        var winStartTime = child.child("startTime").value.toString()
-                        var winFinishTime = child.child("finishTime").value.toString()
-
-                        wins.add(WinsList(winName, winDesc, winStartTime, winFinishTime))
-                    }
-                    val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    winsRV.layoutManager = lm
-                    winsRV.adapter = WinsRVAdapter(wins)
-                    lm.scrollToPosition(WinsRVAdapter(wins).itemCount - 1)
                 }
 
 
             })
+            winsReference.addValueEventListener(
+                object : ValueEventListener {
+                    override fun onCancelled(p0: DatabaseError) {
+                        Log.e("Firebase", "ERROR")
+                    }
 
-            button.setOnClickListener() {
+                    override fun onDataChange(p0: DataSnapshot) {
+                        var wins = arrayListOf<WinsList>()
+                        for (child in p0.children) {
+                            var winName = child.child("name").value.toString()
+                            var winDesc = child.child("desc").value.toString()
+                            var winStartTime = child.child("startTime").value.toString()
+                            var winFinishTime = child.child("finishTime").value.toString()
+
+                            wins.add(WinsList(winName, winDesc, winStartTime, winFinishTime))
+                        }
+                        val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        winsRV.layoutManager = lm
+                        winsRV.adapter =
+                            WinsRVAdapter(
+                                wins
+                            )
+                        lm.scrollToPosition(
+                            WinsRVAdapter(
+                                wins
+                            ).itemCount - 1)
+                    }
+
+
+                })
+
+            button.setOnClickListener()
+            {
 
                 if (!aimsList[position].isPlaying) {
                     // Log.e("Start", "started")
-
                     aimsList[position].isPlaying = true
-                    Constant.currentAims++
+
+                    // Constant.currentAims++
                     val changeToTrue =
                         mDatebase.reference.child("Users").child(mUser.uid).child("aims")
                             .orderByChild("name").equalTo(aimsList[position].name)
@@ -127,70 +134,43 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                         override fun onDataChange(p0: DataSnapshot) {
                             for (child in p0.children) {
-                                mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-                                    .child(child.key.toString()).child("playing").setValue(true)
-                                    .addOnSuccessListener {
-                                        Log.e("name", "SUCCESS")
+                                Log.e(
+                                    "test",
+                                    p0.child(child.key.toString()).child("playing").value.toString()
+                                )
+                                if (p0.child(child.key.toString()).child("playing").value.toString() == "false") {
+                                    mDatebase.reference.child("Users").child(mUser.uid)
+                                        .child("aims")
+                                        .child(child.key.toString()).child("playing").setValue(true)
+                                        .addOnSuccessListener {
+                                            Log.e("name", "SUCCESS")
 
-                                    }
-                                mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-                                    .child(child.key.toString()).child("startAimTime")
-                                    .setValue(SimpleDateFormat("hh:mm:ss").format(Date()))
-                                    .addOnSuccessListener {
-                                        Log.e("name", "SUCCESS time")
-                                    }
+                                        }
+
+                                    mDatebase.reference.child("Users").child(mUser.uid)
+                                        .child("aims")
+                                        .child(child.key.toString()).child("startAimTime")
+                                        .setValue(SimpleDateFormat("hh:mm:ss").format(Date()))
+                                        .addOnSuccessListener {
+                                            Log.e("name", "SUCCESS time")
+                                        }
+                                }
                             }
                         }
+
                     })
-                    /*val getIsPlayingData =
-                        mDatebase.reference.child("Users").child(mUser.uid).child("aims")
 
-                    getIsPlayingData.addValueEventListener(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            Log.e("Firebase", "ERROR")
-                        }
-
-                        override fun onDataChange(p0: DataSnapshot) {
-                            for (child in p0.children) {
-                                Log.e("time",child.child("startAimTime").value.toString())
-                                *//*startTimeTV.text =
-                                    "Начало выполнения: " + child.child("startAimTime").value.toString()*//*
-                                // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
-                            }
-
-                        }
-
-                    })*/
-                    /*startTimeTV.text =
-                        "Начало выполнения: " + SimpleDateFormat("hh:mm:ss").format(Date())
-                    aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())*/
                 } else if (aimsList[position].isPlaying) {
-                    //(context as BottomNavActivity).stopService(Intent(context as BottomNavActivity,AimService::class.java))
 
                     Log.e("Stop", "Stopped")
                     isPlaying = false
-                    Constant.currentAims--
-                    /* val changeToFalse = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-                         .orderByChild("name").equalTo(aimsList[position].name)
 
-                     changeToFalse.addValueEventListener(object : ValueEventListener {
-                         override fun onCancelled(p0: DatabaseError) {
-                             Log.e("Firebase", "ERROR")
-                         }
-
-                         override fun onDataChange(p0: DataSnapshot) {
-                             for (child in p0.children) {
-                                 mDatebase.reference.child("Users").child(mUser.uid).child("aims")
-                                     .child(child.key.toString()).child("playing").setValue(false)
-                                     .addOnSuccessListener {
-                                         Log.e("name", "SUCCESS")
-                                     }
-                             }
-                         }
-                     })*/
                     aimsRV.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    aimsRV.adapter = AimRVAdapter(aimsList)
+                    aimsRV.adapter =
+                        AimRVAdapter(
+                            aimsList
+                        )
                     winsList.add(
                         WinsList(
                             aimsList[position].name,
@@ -234,12 +214,11 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
 
                 }
-                button.text = if (isPlaying!!) "Закончить" else "Начать"
+                // button.text = if (aimsList[position].isPlaying!!) "Закончить" else "Начать"
 
             }
             aimName.text = aimsList[position].name
             aimDesc.text = aimsList[position].desc
-            //startTimeTV.text=aimsList[position].startTime
         }
     }
 

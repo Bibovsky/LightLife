@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.adapters.my_courses_adapter
 
 import android.content.Context
 import android.content.Intent
@@ -16,6 +16,8 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.example.finalproject.models.PreviewCourseModel
 import com.example.finalproject.ui.passingcourse.PassCourseActivity
 import jp.wasabeef.glide.transformations.BlurTransformation
+import com.example.finalproject.R
+import com.example.finalproject.models.MyCoursesModel
 
 class MyCoursesAdapter(val list: ArrayList<PreviewCourseModel>, val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

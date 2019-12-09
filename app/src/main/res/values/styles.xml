@@ -11,7 +11,9 @@
     <item name="android:background">@drawable/round_tv_1</item>
 </style>
 
-
+    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">#3949A8</item>
+    </style>
     <style name="Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>

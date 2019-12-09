@@ -6,46 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
-    <TextView
-        android:id="@+id/registration_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-black"
-        android:text="Регистрация"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <ImageButton
-        android:background="@android:color/transparent"
-        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginTop="40dp"
         android:id="@+id/user_image_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:background="@drawable/load_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_text_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:gravity="center_horizontal"
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/complete_sign_up_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_text_view">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <EditText
             android:id="@+id/email_sign_up_et"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Почта"
             app:layout_constraintBottom_toTopOf="@+id/login_et"
@@ -54,35 +43,36 @@
 
         <EditText
             android:id="@+id/login_et"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Логин" />
 
         <EditText
             android:id="@+id/password_sign_up_et"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Пароль" />
 
         <EditText
             android:id="@+id/password_confirm_et"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Подтвердите пароль" />
 
-    </LinearLayout>
+        <Button
 
-    <Button
-        android:id="@+id/complete_sign_up_button"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="Зарегистрироваться"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:id="@+id/complete_sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/sign_in_btn"
+            android:text="Зарегистрироваться"
+            android:textColor="#A0A9D9" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

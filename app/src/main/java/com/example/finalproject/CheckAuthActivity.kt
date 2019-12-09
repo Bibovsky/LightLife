@@ -3,6 +3,7 @@ package com.example.finalproject
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,46 +22,50 @@ class CheckAuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_auth)
+        if (isOnline(this)) {
+            mDatebase = FirebaseDatabase.getInstance()
+            mReference = mDatebase.reference.child("Users")
+            mAuth = FirebaseAuth.getInstance()
+            signInLogin = getSharedPreferences("signInLoginPref", Context.MODE_PRIVATE)
+            signInPass = getSharedPreferences("signInPasswordPref", Context.MODE_PRIVATE)
+            signUPLog = getSharedPreferences("signUpLoginPref", Context.MODE_PRIVATE)
+            signUpPass = getSharedPreferences("signUpPasswordPref", Context.MODE_PRIVATE)
+            val signLogin = signInLogin.getString("signInLogin", null)
+            val signPass = signInPass.getString("signInPassword", null)
+            val signUpLogin = signUPLog.getString("signUpLoginPref", null)
+            val signUpPassword = signUpPass.getString("signUpPasswordPref", null)
+            if (signLogin != null && signPass != null) {
+                mAuth.signInWithEmailAndPassword(signLogin!!, signPass!!)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
 
-        mDatebase = FirebaseDatabase.getInstance()
-        mReference = mDatebase.reference.child("Users")
-        mAuth = FirebaseAuth.getInstance()
-        signInLogin = getSharedPreferences("signInLoginPref", Context.MODE_PRIVATE)
-        signInPass = getSharedPreferences("signInPasswordPref", Context.MODE_PRIVATE)
-        signUPLog = getSharedPreferences("signUpLoginPref", Context.MODE_PRIVATE)
-        signUpPass = getSharedPreferences("signUpPasswordPref", Context.MODE_PRIVATE)
-        val signLogin = signInLogin.getString("signInLogin", null)
-        val signPass = signInPass.getString("signInPassword", null)
-        val signUpLogin = signUPLog.getString("signUpLoginPref", null)
-        val signUpPassword = signUpPass.getString("signUpPasswordPref", null)
-        if (signLogin != null && signPass != null) {
-            mAuth.signInWithEmailAndPassword(signLogin!!, signPass!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+                            Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
 
-                        Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
-
-                        newActivity()
+                            newActivity()
+                        }
                     }
-                }
 
 
-        } else if (signUpLogin != null && signUpPassword != null) {
-            mAuth.signInWithEmailAndPassword(signUpLogin!!, signUpPassword!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+            } else if (signUpLogin != null && signUpPassword != null) {
+                mAuth.signInWithEmailAndPassword(signUpLogin!!, signUpPassword!!)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
 
-                        Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Успешно", Toast.LENGTH_SHORT).show()
 
-                        newActivity()
+                            newActivity()
+                        }
                     }
-                }
-        } else {
-            val intent = Intent(this, SignInActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
+            } else {
+                val intent = Intent(this, SignInActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
+            }
+        }
+        else{
+            Toast.makeText(this,"No Internet connection",Toast.LENGTH_LONG).show()
         }
 
 
@@ -72,5 +77,13 @@ class CheckAuthActivity : AppCompatActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
+    }
+
+    @Suppress("DEPRECATION")
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        return networkInfo != null && networkInfo.isConnected
     }
 }

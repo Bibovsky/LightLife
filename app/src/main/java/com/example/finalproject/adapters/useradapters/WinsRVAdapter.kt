@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.adapters.useradapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.example.finalproject.models.WinsList
 
 class WinsRVAdapter(val winsList: ArrayList<WinsList>) :
@@ -21,7 +22,7 @@ class WinsRVAdapter(val winsList: ArrayList<WinsList>) :
         fun bind(position: Int) {
             winName.text = winsList[position].name
             winDesc.text = winsList[position].desc
-            winstartTime.text = "Начало выполнения: " + winsList[position].startTime
+            winstartTime.text = winsList[position].startTime
             winFinishTime.text = "Завершено: " + winsList[position].finishTime
         }
     }
