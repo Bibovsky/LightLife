@@ -30,9 +30,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".CheckAuthActivity"
-            android:screenOrientation="portrait">
+
+        <activity android:name=".ui.activities.AddEventActivity"></activity>
+        <activity android:name=".ui.activities.CheckAuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,14 +40,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BottomNavActivity"
+            android:name=".ui.activities.BottomNavActivity"
             android:label="@string/title_activity_bottom_nav"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".ui.activities.SignInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".ui.activities.SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.chat.ChatActivity"

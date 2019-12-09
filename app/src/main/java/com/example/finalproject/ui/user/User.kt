@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.example.finalproject.R
-import com.example.finalproject.SignInActivity
+import com.example.finalproject.ui.activities.SignInActivity
 import com.example.finalproject.adapters.useradapters.AimRVAdapter
 import com.example.finalproject.adapters.useradapters.WinsRVAdapter
 import com.example.finalproject.models.AimsList

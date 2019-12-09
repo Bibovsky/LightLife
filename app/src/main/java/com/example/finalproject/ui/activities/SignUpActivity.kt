@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.ui.activities
 
 import android.app.Activity
 import android.content.Context
@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.example.finalproject.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -158,6 +159,8 @@ class SignUpActivity : AppCompatActivity() {
     private fun setColorStatusBar() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBar)
+        window.statusBarColor = ContextCompat.getColor(this,
+            R.color.StatusBar
+        )
     }
 }

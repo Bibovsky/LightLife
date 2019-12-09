@@ -1,16 +1,14 @@
-package com.example.finalproject
+package com.example.finalproject.ui.activities
 
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.appcompat.app.ActionBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.finalproject.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BottomNavActivity : AppCompatActivity() {
 
@@ -39,6 +37,9 @@ class BottomNavActivity : AppCompatActivity() {
     private fun setColorStatusBar() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBar)
+        window.statusBarColor = ContextCompat.getColor(this,
+            R.color.StatusBar
+        )
+
     }
 }
