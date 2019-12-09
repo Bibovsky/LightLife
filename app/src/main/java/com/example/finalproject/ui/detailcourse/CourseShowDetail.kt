@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -47,6 +48,7 @@ class CourseShowDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_show_detail)
         setSupportActionBar(toolbar)
+        setColorStatusBar()
 
         //style collapseToolBar
         val collapsingToolbarLayout: CollapsingToolbarLayout = findViewById(R.id.titleCourse)
@@ -140,6 +142,12 @@ class CourseShowDetail : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         mReference = FirebaseDatabase.getInstance().reference.child(CHILD_MY_COURSES).child(mAuth.uid!!)
         mReference.push().setValue(list)
+    }
+
+    private fun setColorStatusBar() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBar)
     }
 
     /*Next three methods for SHARE*/

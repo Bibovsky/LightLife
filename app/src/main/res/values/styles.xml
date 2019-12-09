@@ -7,9 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-<style name="info">
-    <item name="android:background">@drawable/round_tv_1</item>
-</style>
+    <style name="info">
+        <item name="android:background">@drawable/round_tv_1</item>
+    </style>
 
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">#3949A8</item>
@@ -22,6 +22,11 @@
 
     <color name="StatusBar">
         #BCC3E5
+    </color>
+
+
+    <color name="StatusBarYoutube">
+        #000000
     </color>
 
     <style name="AppTheme.NoActionBar">

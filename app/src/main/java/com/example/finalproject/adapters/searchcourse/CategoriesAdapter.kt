@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.example.finalproject.models.PreviewCourseModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
 import java.util.ArrayList
@@ -20,6 +21,8 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
     RecyclerView.Adapter<CategoriesAdapter.ItemPostHolder>() {
 
     private val CHILD: String = "CourseData"
+    private val CHILD_MY_COURSES = "MyCourses"
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemPostHolder {
         return ItemPostHolder(
@@ -73,6 +76,35 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
                         )
                     )
                 }
+                deleteSelectedCourse(list, headerSection)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                //not implemented
+            }
+        })
+    }
+
+
+    private fun deleteSelectedCourse(list: ArrayList<PreviewCourseModel>, headerSection: String) {
+        mAuth = FirebaseAuth.getInstance()
+        val resultList: ArrayList<PreviewCourseModel> = ArrayList(list)
+
+        val ref: DatabaseReference =
+            FirebaseDatabase.getInstance().reference.child(CHILD_MY_COURSES).child(mAuth.uid!!)
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                p0.children.forEach {
+                    val id: String = it.value.toString()
+
+                    for (i in 0 until resultList.size){
+                        if(id == resultList[i].id){
+                            list.remove(resultList[i])
+                        }
+                    }
+                }
+
+                //creating RecyclerView with sections
                 createSectionCoursesRecycler(list, headerSection)
             }
 
@@ -96,7 +128,7 @@ class CategoriesAdapter(private val list: List<String>, val context: Context, pr
                     CoursesSectionAdapter(
                         entry.key,
                         entry.value,
-                        context!!
+                        context
                     )
                 )
             }

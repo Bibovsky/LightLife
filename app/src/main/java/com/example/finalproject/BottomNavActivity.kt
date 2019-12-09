@@ -1,10 +1,12 @@
 package com.example.finalproject
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -16,6 +18,7 @@ class BottomNavActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bottom_nav)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        setColorStatusBar()
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -30,5 +33,12 @@ class BottomNavActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
+    }
+
+
+    private fun setColorStatusBar() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.StatusBar)
     }
 }
