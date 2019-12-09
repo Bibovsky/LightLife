@@ -55,6 +55,10 @@ class User : Fragment() {
     lateinit var winTV: TextView
     lateinit var winName: TextView
     var winsCount = 0
+    var aimsCount = 0
+    var aimArray= arrayListOf<String>()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,6 +68,7 @@ class User : Fragment() {
         initDB()
         val view = LayoutInflater.from(container!!.context)
             .inflate(R.layout.fragment_user, container, false)
+
         initLists()
         initViews(view)
         loadProfilePhoto()
@@ -74,6 +79,7 @@ class User : Fragment() {
         initAimsRV()
         initSnapHelpers()
         winsPron()
+        aimsPron()
         return view
     }
 
@@ -112,10 +118,41 @@ class User : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.childrenCount.toInt() == 0) {
-                        aimsList.add(AimsList("Бег","Пробежка каждый день, время увеличивайте каждый раз на минуту", "Не начинал", false))
-                        aimsList.add(AimsList("Никакого фастфуда!","Полностью исключите из своего рациона фастфуд.", "Не начинал", false))
-                        aimsList.add(AimsList("Вода","Вам необходимо пить по 2 литра воды в день.", "Не начинал", false))
-                        aimsList.add(AimsList("Сон","Ложитесь спать не позднее 23:00 и спите не меньше 8 часов в сутки.", "Не начинал", false))
+                    aimsList.add(
+                        AimsList(
+                            "Бег",
+                            "Пробежка каждый день, время увеличивайте каждый раз на минуту",
+                            "Не начинал",
+                            false
+                        )
+                    )
+                    aimsList.add(
+                        AimsList(
+                            "Никакого фастфуда!",
+                            "Полностью исключите из своего рациона фастфуд.",
+                            "Не начинал",
+                            false
+                        )
+                    )
+                    aimsList.add(
+                        AimsList(
+                            "Вода",
+                            "Вам необходимо пить по 2 литра воды в день.",
+                            "Не начинал",
+                            false
+                        )
+                    )
+                    aimsList.add(
+                        AimsList(
+                            "Сон",
+                            "Ложитесь спать не позднее 23:00 и спите не меньше 8 часов в сутки.",
+                            "Не начинал",
+                            false
+                        )
+                    )
+                    for(i in 1..50){
+                        aimsList.add(AimsList("Цель $i", "Описание $","Не начинал",false))
+                    }
                     pushData()
 
                 }
@@ -132,7 +169,6 @@ class User : Fragment() {
                 aimsRV.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 aimsRV.adapter = AimRVAdapter(aimsList)
-                aimsPron(p0)
             }
 
         })
@@ -253,38 +289,51 @@ class User : Fragment() {
         return winsList
     }
 
-    fun aimsPron(p0: DataSnapshot) {
-        var aimPron = ""
-        if (Constant.currentAims % 10 == 1) {
-            aimPron = "Цель"
-        } else if (Constant.currentAims % 10 == 11 || Constant.currentAims % 10 == 12 || Constant.currentAims % 10 == 13 || Constant.currentAims % 10 == 14) {
-            aimPron = "Целей"
-        } else if (Constant.currentAims % 10 >= 2 && Constant.currentAims <= 4) {
-            aimPron = "Цели"
-        } else aimPron = "Целей"
-        aimTV.text = Constant.currentAims.toString()
-        aimName.text = aimPron
+    fun aimsPron() {
+        val aimref = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
+        aimref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Log.e("firebase","RRROR")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                aimsCount = p0.childrenCount.toInt()
+                Log.e("aims",aimsCount.toString())
+                var aimPron = ""
+                if (Constant.currentAims % 10 == 1) {
+                    aimPron = "Цель"
+                } else if (Constant.currentAims % 10 == 11 || Constant.currentAims % 10 == 12 || Constant.currentAims % 10 == 13 || Constant.currentAims % 10 == 14) {
+                    aimPron = "Целей"
+                } else if (Constant.currentAims % 10 >= 2 && Constant.currentAims <= 4) {
+                    aimPron = "Цели"
+                } else aimPron = "Целей"
+                aimTV.text = aimsCount.toString()
+                aimName.text = aimPron
+            }
+
+        })
+
     }
 
     fun winsPron() {
         val winRef = mDatebase.reference.child("Users").child(mUser.uid).child("wins")
         winRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e("firebase","RRROR")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                winsCount=p0.childrenCount.toInt()
-                Log.e("wins",winsCount.toString())
+                winsCount = p0.childrenCount.toInt()
+                Log.e("wins", winsCount.toString())
                 var winPron = ""
                 if (winsCount % 10 == 1) {
                     winPron = "Победа"
-                } else if (winsCount == 11 || winsCount == 12 || winsCount == 13 ||winsCount== 14) {
+                } else if (winsCount == 11 || winsCount == 12 || winsCount == 13 || winsCount == 14) {
                     winPron = "Побед"
                 } else if (winsCount >= 2 && winsCount <= 4) {
                     winPron = "Побед"
                 } else winPron = "Побед"
-                Log.e("winscount",winsCount.toString())
+                Log.e("winscount", winsCount.toString())
                 winTV.text = winsCount.toString()
                 winName.text = winPron
             }
@@ -292,4 +341,5 @@ class User : Fragment() {
         })
 
     }
+
 }

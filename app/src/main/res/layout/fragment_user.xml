@@ -19,18 +19,19 @@
             android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="USERNAME"
+            android:layout_marginHorizontal="5dp"
+            android:text=""
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-
             android:id="@+id/user_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="5dp"
+            android:background="@drawable/load_photo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_name_tv" />
@@ -62,7 +63,7 @@
                     android:id="@+id/wins_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="7"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textSize="20sp"
 
@@ -95,7 +96,7 @@
                     android:id="@+id/courses_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="4"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textSize="20sp"
 
@@ -105,7 +106,7 @@
                     android:id="@+id/course_name_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="курса"
+                    android:text="курсов"
                     android:textAlignment="center"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -126,7 +127,7 @@
                     android:id="@+id/aims_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textSize="20sp"
 
@@ -185,11 +186,19 @@
                         android:id="@+id/aims"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginHorizontal="25dp"
                         android:text="Цели"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginRight="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:background="#9FA8D8" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/aim_rv"
@@ -217,12 +226,18 @@
                         android:id="@+id/wins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginHorizontal="25dp"
                         android:text="Победы"
                         android:textSize="24sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/aim_rv" />
-
+                    <View
+                        android:layout_marginRight="80dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="5dp"
+                        android:background="#9FA8D8" />
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/wins_rv"
                         android:layout_width="match_parent"
@@ -239,14 +254,14 @@
                     android:id="@+id/logout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="LOGOUT"
+                    android:background="@android:color/transparent"
+                    android:text="Выйти"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
             </LinearLayout>
         </ScrollView>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,7 +73,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                     try {
                         startTimeTV.text = "Начало: " +
                                 timeList[position]
-                        aimStartTime =startTimeTV.text.toString()
+                        aimStartTime = startTimeTV.text.toString()
 
 
                     } catch (err: IndexOutOfBoundsException) {
@@ -115,7 +115,7 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                     // Log.e("Start", "started")
                     aimsList[position].isPlaying = true
 
-                    Constant.currentAims++
+                    // Constant.currentAims++
                     val changeToTrue =
                         mDatebase.reference.child("Users").child(mUser.uid).child("aims")
                             .orderByChild("name").equalTo(aimsList[position].name)
@@ -153,12 +153,10 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                     })
 
-                    //button.text="Закончить"
                 } else if (aimsList[position].isPlaying) {
 
                     Log.e("Stop", "Stopped")
                     isPlaying = false
-                    Constant.currentAims--
 
                     aimsRV.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
