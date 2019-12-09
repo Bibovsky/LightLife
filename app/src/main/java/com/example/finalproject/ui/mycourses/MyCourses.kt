@@ -20,6 +20,7 @@ class MyCourses : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private val CHILD: String = "CourseData"
     private val CHILD_MY_COURSES = "MyCourses"
+    private lateinit var myCoursesRV: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,14 +29,18 @@ class MyCourses : Fragment() {
     ): View? {
         val view =
             LayoutInflater.from(context).inflate(R.layout.my_courses_fragment, container, false)
+        
+        myCoursesRV = view.findViewById<RecyclerView>(R.id.my_courses_rv)
+        val snapHelper: SnapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(myCoursesRV)
 
-        getMyCourses(view)
+        getMyCourses()
 
         return view
     }
 
 
-    private fun getMyCourses(view: View) {
+    private fun getMyCourses() {
         val myCoursesId: ArrayList<String> = arrayListOf()
         mAuth = FirebaseAuth.getInstance()
         val ref: DatabaseReference =
@@ -45,7 +50,7 @@ class MyCourses : Fragment() {
                 p0.children.forEach {
                     myCoursesId.add(it.value.toString())
                 }
-                getContentMyCourses(myCoursesId, view)
+                getContentMyCourses(myCoursesId)
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -55,7 +60,7 @@ class MyCourses : Fragment() {
     }
 
 
-    private fun getContentMyCourses(myCoursesId: ArrayList<String>, view: View) {
+    private fun getContentMyCourses(myCoursesId: ArrayList<String>) {
         val list: ArrayList<PreviewCourseModel> = arrayListOf()
         val ref: DatabaseReference = FirebaseDatabase.getInstance().reference.child(CHILD)
 
@@ -76,7 +81,7 @@ class MyCourses : Fragment() {
                         )
                     )
                 }
-                initRecyclerView(list, view)
+                initRecyclerView(list)
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -86,11 +91,7 @@ class MyCourses : Fragment() {
     }
 
 
-    private fun initRecyclerView(list: ArrayList<PreviewCourseModel>, view: View) {
-        val myCoursesRV = view.findViewById<RecyclerView>(R.id.my_courses_rv)
-        val snapHelper: SnapHelper = LinearSnapHelper()
-
-        snapHelper.attachToRecyclerView(myCoursesRV)
+    private fun initRecyclerView(list: ArrayList<PreviewCourseModel>) {
         myCoursesRV.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
