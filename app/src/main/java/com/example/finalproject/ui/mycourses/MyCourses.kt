@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.example.finalproject.adapters.my_courses_adapter.MyCoursesAdapter
 import com.example.finalproject.R
+import com.example.finalproject.adapters.my_courses_adapter.MyCoursesAdapter
 import com.example.finalproject.models.PreviewCourseModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -98,10 +98,8 @@ class MyCourses : Fragment() {
 
         myCoursesRV.adapter =
             MyCoursesAdapter(
-                myCoursesList
+                list, context!!
             )
-        return view
-
 
     }
 }

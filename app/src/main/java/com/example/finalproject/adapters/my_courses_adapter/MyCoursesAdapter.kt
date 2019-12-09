@@ -17,7 +17,6 @@ import com.example.finalproject.models.PreviewCourseModel
 import com.example.finalproject.ui.passingcourse.PassCourseActivity
 import jp.wasabeef.glide.transformations.BlurTransformation
 import com.example.finalproject.R
-import com.example.finalproject.models.MyCoursesModel
 
 class MyCoursesAdapter(val list: ArrayList<PreviewCourseModel>, val context: Context) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
