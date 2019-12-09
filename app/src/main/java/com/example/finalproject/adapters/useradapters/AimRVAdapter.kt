@@ -72,9 +72,14 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                         // aimStartTime = SimpleDateFormat("hh:mm:ss").format(Date())
                     }
                     try {
-                        startTimeTV.text = "Начало: " +
-                                timeList[position]
-                        aimStartTime = startTimeTV.text.toString()
+                        if (timeList[position]=="00:00:00")
+                            startTimeTV.text=""
+                        else{
+                            startTimeTV.text = "Начало: " +
+                                    timeList[position]
+                            aimStartTime = startTimeTV.text.toString()
+                        }
+
 
 
                     } catch (err: IndexOutOfBoundsException) {
