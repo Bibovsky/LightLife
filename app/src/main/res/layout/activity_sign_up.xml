@@ -63,11 +63,12 @@
             android:hint="Подтвердите пароль" />
 
         <Button
+
             android:id="@+id/complete_sign_up_button"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="40dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/sign_in_btn"
             android:text="Зарегистрироваться"
             android:textColor="#A0A9D9" />

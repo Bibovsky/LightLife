@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
-import com.example.finalproject.AimRVAdapter
 import com.example.finalproject.R
 import com.example.finalproject.SignInActivity
-import com.example.finalproject.WinsRVAdapter
+import com.example.finalproject.adapters.useradapters.AimRVAdapter
+import com.example.finalproject.adapters.useradapters.WinsRVAdapter
 import com.example.finalproject.models.AimsList
 import com.example.finalproject.models.Constant
 import com.example.finalproject.models.WinsList
@@ -54,10 +54,11 @@ class User : Fragment() {
     lateinit var aimTV: TextView
     lateinit var winTV: TextView
     lateinit var winName: TextView
+    lateinit var coursesTV: TextView
+    lateinit var coursesName: TextView
     var winsCount = 0
     var aimsCount = 0
-    var aimArray= arrayListOf<String>()
-
+    private val CHILD_MY_COURSES = "MyCourses"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +81,7 @@ class User : Fragment() {
         initSnapHelpers()
         winsPron()
         aimsPron()
+        countMyCourses()
         return view
     }
 
@@ -97,8 +99,10 @@ class User : Fragment() {
     }
 
     fun initAdapters() {
-        aimsRV.adapter = AimRVAdapter(aimsList)
-        winsRV.adapter = WinsRVAdapter(winsList)
+        aimsRV.adapter =
+            AimRVAdapter(aimsList)
+        winsRV.adapter =
+            WinsRVAdapter(winsList)
     }
 
     fun initLists() {
@@ -150,8 +154,8 @@ class User : Fragment() {
                             false
                         )
                     )
-                    for(i in 1..50){
-                        aimsList.add(AimsList("Цель $i", "Описание $","Не начинал",false))
+                    for (i in 1..50) {
+                        aimsList.add(AimsList("Цель $i", "Описание $", "Не начинал", false))
                     }
                     pushData()
 
@@ -168,7 +172,10 @@ class User : Fragment() {
 
                 aimsRV.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                aimsRV.adapter = AimRVAdapter(aimsList)
+                aimsRV.adapter =
+                    AimRVAdapter(
+                        aimsList
+                    )
             }
 
         })
@@ -254,6 +261,8 @@ class User : Fragment() {
     }
 
     fun initViews(view: View) {
+        coursesTV = view.findViewById(R.id.courses_tv)
+        coursesName = view.findViewById(R.id.course_name_tv)
         winTV = view.findViewById(R.id.wins_tv)
         winName = view.findViewById(R.id.win_name_tv)
         aimName = view.findViewById(R.id.aim_name_tv)
@@ -293,12 +302,12 @@ class User : Fragment() {
         val aimref = mDatebase.reference.child("Users").child(mUser.uid).child("aims")
         aimref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Log.e("firebase","RRROR")
+                Log.e("firebase", "RRROR")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
                 aimsCount = p0.childrenCount.toInt()
-                Log.e("aims",aimsCount.toString())
+                Log.e("aims", aimsCount.toString())
                 var aimPron = ""
                 if (Constant.currentAims % 10 == 1) {
                     aimPron = "Цель"
@@ -319,7 +328,7 @@ class User : Fragment() {
         val winRef = mDatebase.reference.child("Users").child(mUser.uid).child("wins")
         winRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Log.e("firebase","RRROR")
+                Log.e("firebase", "RRROR")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -342,4 +351,35 @@ class User : Fragment() {
 
     }
 
+    fun coursesPron(count: Int) {
+        var coursepron = ""
+        if (winsCount % 10 == 1) {
+            coursepron = "Курс"
+        } else if (winsCount == 11 || winsCount == 12 || winsCount == 13 || winsCount == 14) {
+            coursepron = "Курсов"
+        } else if (winsCount >= 2 && winsCount <= 4) {
+            coursepron = "Курса"
+        } else coursepron = "Курсов"
+        coursesTV.text = count.toString()
+        coursesName.text = coursepron
+    }
+
+    private fun countMyCourses() {
+        var count = 0
+        mAuth = FirebaseAuth.getInstance()
+        val ref: DatabaseReference =
+            FirebaseDatabase.getInstance().reference.child(CHILD_MY_COURSES).child(mAuth.uid!!)
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                p0.children.forEach {
+                    count++
+                }
+                coursesPron(count)
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+//not implemented
+            }
+        })
+    }
 }

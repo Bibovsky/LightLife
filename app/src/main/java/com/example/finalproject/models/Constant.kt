@@ -1,6 +1,5 @@
 package com.example.finalproject.models
 
-import com.example.finalproject.WinsRVAdapter
 import com.example.finalproject.ui.user.User
 
 class Constant {

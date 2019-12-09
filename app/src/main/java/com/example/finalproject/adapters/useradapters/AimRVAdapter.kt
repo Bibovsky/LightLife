@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.adapters.useradapters
 
 import android.content.Context
 import android.util.Log
@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.example.finalproject.models.AimsList
 import com.example.finalproject.models.Constant
 import com.example.finalproject.models.WinsList
@@ -101,8 +102,14 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
                         }
                         val lm = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                         winsRV.layoutManager = lm
-                        winsRV.adapter = WinsRVAdapter(wins)
-                        lm.scrollToPosition(WinsRVAdapter(wins).itemCount - 1)
+                        winsRV.adapter =
+                            WinsRVAdapter(
+                                wins
+                            )
+                        lm.scrollToPosition(
+                            WinsRVAdapter(
+                                wins
+                            ).itemCount - 1)
                     }
 
 
@@ -160,7 +167,10 @@ class AimRVAdapter(val aimsList: ArrayList<AimsList>) :
 
                     aimsRV.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    aimsRV.adapter = AimRVAdapter(aimsList)
+                    aimsRV.adapter =
+                        AimRVAdapter(
+                            aimsList
+                        )
                     winsList.add(
                         WinsList(
                             aimsList[position].name,

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import com.example.finalproject.MyCoursesAdapter
+import com.example.finalproject.adapters.my_courses_adapter.MyCoursesAdapter
 import com.example.finalproject.R
 import com.example.finalproject.models.MyCoursesModel
 
@@ -32,7 +32,10 @@ class MyCourses:Fragment() {
 
         myCoursesRV.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        myCoursesRV.adapter = MyCoursesAdapter(myCoursesList)
+        myCoursesRV.adapter =
+            MyCoursesAdapter(
+                myCoursesList
+            )
         return view
 
     }
