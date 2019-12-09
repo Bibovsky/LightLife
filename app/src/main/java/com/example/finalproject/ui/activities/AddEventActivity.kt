@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.finalproject.ui.activities
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.finalproject.R
 import com.example.finalproject.models.DiaryModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -40,7 +41,9 @@ class AddEventActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
-        mTopToolbar!!.getNavigationIcon()!!.setColorFilter(getResources().getColor(R.color.F2F3FA), PorterDuff.Mode.SRC_ATOP)
+        mTopToolbar!!.getNavigationIcon()!!.setColorFilter(getResources().getColor(
+            R.color.F2F3FA
+        ), PorterDuff.Mode.SRC_ATOP)
         mTopToolbar!!.setNavigationOnClickListener {
             finish()
         }
