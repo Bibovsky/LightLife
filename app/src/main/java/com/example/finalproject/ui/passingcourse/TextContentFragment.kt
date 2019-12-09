@@ -55,7 +55,7 @@ class TextContentFragment(val idCourse: String) : Fragment() {
                     )
                 }
                 initViews(view)
-                setListeners(list, view)
+                setListeners(list)
             }
 
             override fun onCancelled(p0: DatabaseError) {
@@ -65,9 +65,11 @@ class TextContentFragment(val idCourse: String) : Fragment() {
     }
 
 
-    private fun setListeners(list: ArrayList<TextPassCourseModel>, view: View) {
+    private fun setListeners(list: ArrayList<TextPassCourseModel>) {
+        //it doesn't look good
+        var nextFlag = false
+        var prevFlag = true
         var value: TextPassCourseModel
-        var isFirstPrev = false
         val strIterable: ListIterator<TextPassCourseModel> = list.listIterator()
 
         value = strIterable.next()
@@ -76,30 +78,40 @@ class TextContentFragment(val idCourse: String) : Fragment() {
             .load(value.urlImg)
             .into(imageView)
 
+        prevBtn.visibility = View.GONE
+
         nextBtn.setOnClickListener {
+            prevFlag = true
             if (strIterable.hasNext()) {
                 value = strIterable.next()
-                if (strIterable.hasNext() && isFirstPrev){
+
+                if(strIterable.hasNext() && nextFlag){
+                    nextFlag = false
                     value = strIterable.next()
                 }
                 textContent.text = value.textContent
                 Glide.with(this)
                     .load(value.urlImg)
                     .into(imageView)
+
+                changeVisibilityButton(strIterable)
             }
         }
 
         prevBtn.setOnClickListener {
-            isFirstPrev = true
             if (strIterable.hasPrevious()) {
+                nextFlag = true
                 value = strIterable.previous()
-                if (strIterable.hasPrevious()){
+                if(strIterable.hasPrevious() && prevFlag){
+                    prevFlag = false
                     value = strIterable.previous()
                 }
                 textContent.text = value.textContent
                 Glide.with(this)
                     .load(value.urlImg)
                     .into(imageView)
+
+                changeVisibilityButton(strIterable)
             }
         }
     }
@@ -110,5 +122,23 @@ class TextContentFragment(val idCourse: String) : Fragment() {
         prevBtn = view.findViewById(R.id.prev)
         textContent = view.findViewById(R.id.passCourseTextContent)
         imageView = view.findViewById(R.id.passingCourseImage)
+
+        nextBtn.visibility = View.VISIBLE
+        prevBtn.visibility = View.VISIBLE
+    }
+
+
+    private fun changeVisibilityButton(strIterable: ListIterator<TextPassCourseModel>) {
+        if (strIterable.hasPrevious()) {
+            prevBtn.visibility = View.VISIBLE
+        } else {
+            prevBtn.visibility = View.GONE
+        }
+
+        if (strIterable.hasNext()) {
+            nextBtn.visibility = View.VISIBLE
+        } else {
+            nextBtn.visibility = View.GONE
+        }
     }
 }

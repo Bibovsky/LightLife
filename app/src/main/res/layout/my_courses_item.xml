@@ -7,31 +7,26 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="10dp"
             android:layout_margin="10dp"
-            app:cardElevation="10dp"
-            >
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
 
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/my_courses_photo"
                     android:layout_width="0dp"
                     android:layout_height="250dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:scaleType="centerCrop"
                     android:src="@color/colorPrimaryDark"
-                    android:text="text"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -43,30 +38,39 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:text="text"
+                    android:textColor="@android:color/black"
                     android:textSize="24dp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/my_courses_photo"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/my_courses_photo" />
 
                 <TextView
-                    android:id="@+id/my_courses_description_text_view"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/my_courses_description"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="15"
+                    android:paddingEnd="5dp"
                     android:text="text"
+                    android:textColor="@android:color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/my_courses_name_text_view" />
 
                 <Button
-                    android:id="@+id/continue_course_button"
-                    android:layout_width="154dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
+                    android:id="@+id/continue_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:drawableEnd="@drawable/button_image"
+                    android:background="@drawable/corner_resume_button"
+                    android:drawableEnd="@drawable/ic_continue"
+                    android:drawablePadding="5dp"
+                    android:paddingStart="7dp"
+                    android:paddingEnd="7dp"
                     android:text="Продолжить"
+                    android:textColor="#c4c4c4"
+                    android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -76,11 +80,12 @@
                     android:layout_height="16dp"
                     android:layout_marginLeft="16dp"
                     android:src="@drawable/chel"
-                    app:layout_constraintBottom_toBottomOf="@+id/continue_course_button"
+                    app:layout_constraintBottom_toBottomOf="@+id/continue_button"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/continue_course_button" />
+                    app:layout_constraintTop_toTopOf="@+id/continue_button" />
 
                 <TextView
+                    android:id="@+id/my_course_number_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
